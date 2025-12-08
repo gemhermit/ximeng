@@ -9,32 +9,32 @@ const gsap = (window as any).gsap;
 const solutionsData = [
     {
         id: 'industrial',
-        title: '工业制造 Agent',
-        subtitle: 'Industrial Agent',
-        desc: '面向产线的智能助手，连接设备与业务。',
-        features: ['设备监测', '工单流转', '质量追溯', '能耗分析'],
+        title: '工业制造智能体',
+        subtitle: '工业制造',
+        desc: '面向工业的智能助手，为工业生产提供智能化解决方案。',
+        features: ['设备监测', '工单审核', '质量追溯', '能耗分析'],
         icon: 'fa-industry',
         color: 'blue',
         image: '/images/solution-industrial.jpg',
-        metrics: ['提升产能', '降低停机', '优化成本']
+        metrics: ['提升产能', '提升人效', '优化成本']
     },
     {
         id: 'education',
         title: '科技教育平台',
-        subtitle: 'EdTech Platform',
+        subtitle: '教育科技',
         desc: '一体化教研、教学、评测平台。',
-        features: ['课程管理', '题库与评测', '班级协作', '家校沟通'],
+        features: ['课程管理', '题库与评测', '班级协作', '教师培训'],
         icon: 'fa-graduation-cap',
         color: 'green',
         image: '/images/solution-education.jpg',
-        metrics: ['提升参与度', '提高留存', '支持多端']
+        metrics: ['提升参与度', '提高教学质量', '丰富教学成果']
     },
     {
         id: 'culture',
-        title: '文旅文化',
-        subtitle: 'Culture & Tourism',
-        desc: '面向景区与博物馆的数字化运营。',
-        features: ['导览服务', '预约入园', '内容讲解', '活动运营'],
+        title: 'AI文旅文化',
+        subtitle: '文旅文化',
+        desc: '面向景区与博物馆等文娱方向的数字化服务。',
+        features: ['AI数字人', 'AI文旅视频', 'AI内容讲解', 'AI活动运营'],
         icon: 'fa-landmark',
         color: 'pink',
         image: '/images/solution-culture.jpg',
@@ -43,8 +43,8 @@ const solutionsData = [
     {
         id: 'cloud',
         title: '云引擎服务',
-        subtitle: 'Cloud Engine',
-        desc: '稳定、可扩展的应用托管与运维。',
+        subtitle: '云引擎服务',
+        desc: '牵头火山引擎和华为提出并落地国内首套Hiagent基于昇腾裸金属服务器联合解决方案。',
         features: ['容器编排', '弹性扩缩容', '日志告警', '灰度发布'],
         icon: 'fa-cloud',
         color: 'cyan',
@@ -54,7 +54,7 @@ const solutionsData = [
     {
         id: 'marketing',
         title: '全域 AI 营销',
-        subtitle: 'AI Marketing',
+        subtitle: '全域 AI 营销',
         desc: '数据驱动的内容与投放协同。',
         features: ['素材生成', '智能分发', '效果评估', '数据整合'],
         icon: 'fa-bullseye',
@@ -65,31 +65,31 @@ const solutionsData = [
     {
         id: 'hardware',
         title: 'AI 硬件定制',
-        subtitle: 'AI Hardware',
+        subtitle: 'AI 硬件定制',
         desc: '按需定制边缘计算硬件与固件。',
-        features: ['板卡选型', '算法适配', '低功耗优化', '端侧部署'],
+        features: ['AI鼠标', 'AI陪伴', 'AI学习机', 'AI开发套件'],
         icon: 'fa-microchip',
         color: 'orange',
         image: '/images/solution-hardware.jpg',
-        metrics: ['快速落地', '低功耗', '场景定制']
+        metrics: ['快速落地', '自定义模具', '场景定制']
     }
 ];
 
 const Solutions: React.FC = () => {
     const containerRef = useRef(null);
-    const [activeFilter, setActiveFilter] = useState<string>('ALL');
+    const [activeFilter, setActiveFilter] = useState<string>('全部');
     const [selected, setSelected] = useState<any>(null);
     const location = useLocation();
 
     const filters = useMemo(() => {
-        const set = new Set<string>(['ALL']);
-        solutionsData.forEach(s => set.add(s.subtitle));
+        const set = new Set<string>(['全部']);
+        solutionsData.forEach(s => set.add(s.title));
         return Array.from(set);
     }, []);
 
     const filtered = useMemo(() => {
-        if (activeFilter === 'ALL') return solutionsData;
-        return solutionsData.filter(s => s.subtitle === activeFilter);
+        if (activeFilter === '全部') return solutionsData;
+        return solutionsData.filter(s => s.title === activeFilter);
     }, [activeFilter]);
 
     useLayoutEffect(() => {
@@ -150,7 +150,7 @@ const Solutions: React.FC = () => {
                             </div>
 
                             <div className="w-full md:w-1/2 space-y-6">
-                                <div className={`text-${item.color}-400 font-bold tracking-widest text-sm uppercase`}>{item.subtitle}</div>
+                                <div className={`text-${item.color}-400 font-bold tracking-widest text-sm`}>{item.title}</div>
                                 <h2 className="text-3xl md:text-4xl font-bold text-white">{item.title}</h2>
                                 <p className="text-gray-400 text-lg leading-relaxed">{item.desc}</p>
 
@@ -188,7 +188,7 @@ const Solutions: React.FC = () => {
                             </div>
                             <div className="p-6 flex flex-col gap-3">
                                 <div className="flex items-center justify-between">
-                                    <div className={`text-${selected.color}-400 font-bold tracking-widest text-sm uppercase`}>{selected.subtitle}</div>
+                                    <div className={`text-${selected.color}-400 font-bold tracking-widest text-sm`}>{selected.title}</div>
                                     <div className="bg-white/10 backdrop-blur-md px-3 py-1 rounded text-xs font-mono border border-white/10">方案详情</div>
                                 </div>
                                 <h3 className="text-2xl font-bold text-white">{selected.title}</h3>

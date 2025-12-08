@@ -52,6 +52,7 @@ const Hero: React.FC = () => {
         
         {/* Text Content */}
         <div className="space-y-6 md:space-y-8 text-center lg:text-left relative">
+          
 
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tighter mix-blend-lighten">

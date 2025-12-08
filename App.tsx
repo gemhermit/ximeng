@@ -10,6 +10,7 @@ import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './components/LandingPage';
 import Solutions from './pages/Solutions';
 import Cases from './pages/Cases';
+import CaseDetail from './pages/CaseDetail';
 import Careers from './pages/Careers';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
@@ -52,6 +53,7 @@ const App: React.FC = () => {
              <Route path="/" element={<LandingPage />} />
              <Route path="/solutions" element={<Solutions />} />
              <Route path="/cases" element={<Cases />} />
+             <Route path="/cases/:slug" element={<CaseDetail />} />
              <Route path="/careers" element={<Careers />} />
              <Route path="/contact" element={<Contact />} />
              <Route path="/privacy" element={<Privacy />} />

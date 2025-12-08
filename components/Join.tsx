@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Join: React.FC = () => {
   return (
@@ -33,7 +34,7 @@ const Join: React.FC = () => {
                   { title: '产品体验设计师', dept: '设计部', loc: '上海', salary: '25k-45k', color: 'purple' },
                   { title: 'SaaS 架构师', dept: '售前技术部', loc: '北京', salary: '40k-70k', color: 'green' }
               ].map((job, i) => (
-                  <div key={i} className={`group flex flex-col justify-between p-6 rounded-xl bg-white/5 hover:bg-${job.color}-600 hover:scale-[1.02] transition-all duration-300 hoverable cursor-pointer border border-white/5 shadow-lg`}>
+                  <Link to={`/careers#jobs`} key={i} className={`group flex flex-col justify-between p-6 rounded-xl bg-white/5 hover:bg-${job.color}-600 hover:scale-[1.02] transition-all duration-300 hoverable cursor-pointer border border-white/5 shadow-lg`}>
                      <div className="mb-4">
                         <h4 className="font-bold text-lg mb-1">{job.title}</h4>
                         <p className={`text-sm text-gray-400 group-hover:text-${job.color}-200`}>{job.dept} | {job.loc} | {job.salary}</p>
@@ -42,7 +43,7 @@ const Join: React.FC = () => {
                         <span className="text-xs text-gray-500 group-hover:text-white">Full-time</span>
                         <i className="fas fa-arrow-right text-gray-500 group-hover:text-white transform group-hover:translate-x-2 transition-transform"></i>
                      </div>
-                  </div>
+                  </Link>
               ))}
            </div>
         </div>

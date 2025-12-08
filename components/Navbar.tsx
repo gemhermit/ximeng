@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
         <div className={`px-4 md:px-8 ${useSolidStyle ? 'h-16' : 'h-20'} flex justify-between items-center transition-all duration-300`}>
             
             <Link to="/" className="flex items-center gap-2 text-xl font-bold tracking-tighter hoverable z-50" onClick={closeMenu}>
-               <div className="w-3 h-6 bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.6)]"></div> 
+               <img src="/images/logo.png" alt="羲梦科技" className="h-6 w-auto" />
                <span>羲梦科技</span>
             </Link>
 
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
                     
                     {/* Mega Menu */}
                     <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-[90vw] max-w-5xl pointer-events-none group-hover:pointer-events-auto">
-                        <div className="bg-slate-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 shadow-2xl grid grid-cols-4 gap-8 relative overflow-hidden">
+                        <div className="bg-slate-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 shadow-2xl grid grid-cols-3 gap-8 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600"></div>
                             
                             <div className="space-y-4">
@@ -103,16 +103,6 @@ const Navbar: React.FC = () => {
                                     <div className="font-bold text-white group-hover/item:text-orange-400">AI 硬件定制</div>
                                     <p className="text-xs text-gray-500 mt-1">端侧算力芯片开发</p>
                                 </Link>
-                            </div>
-
-                            <div className="relative rounded-xl overflow-hidden group/card border border-white/10 h-full">
-                                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/90 to-transparent z-10"></div>
-                                <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" alt="Robot" />
-                                <div className="absolute bottom-0 left-0 p-5 z-20">
-                                    <div className="text-[10px] text-blue-300 mb-1">NEW ARRIVAL</div>
-                                    <h5 className="font-bold text-sm text-white mb-2">下一代智能机器人</h5>
-                                    <Link to="/solutions#industrial" className="text-xs text-white/80 hover:text-white flex items-center gap-2">查看详情 <i className="fas fa-arrow-right"></i></Link>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -45,8 +45,8 @@ const Contact: React.FC = () => {
                         <div>
                             <h3 className="text-2xl font-bold mb-6">联络方式</h3>
                             <ul className="space-y-4 text-gray-400">
-                                <li className="flex items-center gap-3"><i className="fas fa-envelope text-blue-500"></i> a2829879830@gmail.com</li>
-                                <li className="flex items-center gap-3"><i className="fas fa-phone text-blue-500"></i> +86 185 0355 6950</li>
+                                <li className="flex items-center gap-3"><i className="fas fa-envelope text-blue-500"></i> echo@ximengtech.cn</li>
+                                <li className="flex items-center gap-3"><i className="fas fa-phone text-blue-500"></i> +86 173 1432 4752</li>
                             </ul>
                         </div>
                         <div className="pt-6 border-t border-white/10">

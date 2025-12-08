@@ -34,8 +34,8 @@ const Footer: React.FC = () => {
                <h5 className="text-white font-bold mb-6">联系方式</h5>
                <ul className="space-y-3 text-sm text-gray-500">
                   <li className="flex items-start gap-3"><i className="fas fa-map-marker-alt text-blue-500 mt-1"></i> <span>上海市徐汇区龙台路180号<br/>“模速空间”创新生态社区</span></li>
-                  <li className="flex items-center gap-3"><i className="fas fa-envelope text-blue-500"></i> a2829879830@gmail.com</li>
-                  <li className="flex items-center gap-3"><i className="fas fa-phone text-blue-500"></i> +86 185 0355 6950</li>
+                  <li className="flex items-center gap-3"><i className="fas fa-envelope text-blue-500"></i> echo@ximengtech.cn</li>
+                  <li className="flex items-center gap-3"><i className="fas fa-phone text-blue-500"></i> +86 173 1432 4752</li>
                </ul>
             </div>
             

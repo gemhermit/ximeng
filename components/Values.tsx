@@ -27,7 +27,7 @@ const Values: React.FC = () => {
                 <h2 className="text-4xl font-bold mb-6">以技术<br/><span className="text-blue-500">赋能万物</span></h2>
                 <p className="text-gray-400 leading-relaxed mb-8">我们的愿景是成为全球值得信赖的数字化架构师。无论是在工厂、学校还是景区，我们致力于通过前沿技术解决最复杂的挑战。</p>
                 <button className="text-white hover:text-blue-400 hover:underline transition-colors hoverable flex items-center gap-2">
-                   阅读 ESG 报告 <i className="fas fa-arrow-right"></i>
+
                 </button>
              </div>
              
@@ -35,7 +35,7 @@ const Values: React.FC = () => {
                 {[
                    { icon: 'fa-lightbulb', color: 'yellow', title: '极致创新', desc: '不满足于微小的改进，我们追求颠覆性的突破。', bg: 'amber' },
                    { icon: 'fa-users', color: 'blue', title: '客户成就', desc: '客户的成功是我们唯一的 KPI，其余都是空谈。', bg: 'blue' },
-                   { icon: 'fa-leaf', color: 'green', title: '绿色计算', desc: '承诺 2030 年实现数据中心 100% 清洁能源供电。', bg: 'emerald' },
+                   { icon: 'fa-leaf', color: 'green', title: '绿色计算', desc: '算力服务将使用绿色清洁能源', bg: 'emerald' },
                    { icon: 'fa-hand-holding-heart', color: 'red', title: '开源精神', desc: '拥抱开源社区，贡献核心代码，促进技术普惠。', bg: 'rose' }
                 ].map((item, idx) => (
                    <TiltCard key={idx} className="h-[250px]">
@@ -52,17 +52,17 @@ const Values: React.FC = () => {
                 
                 <div className="col-span-1 sm:col-span-2 glass-panel border border-white/10 bg-white/5 p-8 rounded-xl mt-4 flex justify-between items-center text-center">
                     <div>
-                        <div className="text-3xl font-bold font-mono counter" data-target="1200">0</div>
-                        <div className="text-xs text-gray-500 mt-1">全球专利</div>
+                        <div className="text-3xl font-bold font-mono counter" data-target="100">0</div>
+                        <div className="text-xs text-gray-500 mt-1">累计案例</div>
                     </div>
                     <div className="w-px h-12 bg-white/10"></div>
                     <div>
                         <div className="text-3xl font-bold font-mono counter" data-target="15">0</div>
-                        <div className="text-xs text-gray-500 mt-1">服务国家</div>
+                        <div className="text-xs text-gray-500 mt-1">服务企业</div>
                     </div>
                     <div className="w-px h-12 bg-white/10"></div>
                     <div>
-                        <div className="text-3xl font-bold font-mono">500+</div>
+                        <div className="text-3xl font-bold font-mono">500</div>
                         <div className="text-xs text-gray-500 mt-1">合作伙伴</div>
                     </div>
                 </div>

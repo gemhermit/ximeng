@@ -172,7 +172,7 @@ const Privacy: React.FC = () => {
               如果您对本隐私政策有任何问题或疑虑，请通过以下方式联系我们：
             </p>
             <div className="mt-4 p-4 bg-gray-800/50 rounded-lg">
-              <p className="text-gray-300">电子邮件：<a href="mailto:privacy@ximeng.tech" className="text-blue-400 hover:underline">privacy@ximeng.tech</a></p>
+              <p className="text-gray-300">电子邮件：<a href="mailto:echo@ximengtech.cn" className="text-blue-400 hover:underline">echo@ximengtech.cn</a></p>
               <p className="text-gray-300 mt-2">地址：上海市徐汇区龙台路180号"模速空间"创新生态社区</p>
             </div>
           </section>
