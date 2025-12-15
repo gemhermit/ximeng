@@ -16,7 +16,7 @@ const Join: React.FC = () => {
            <div className="absolute top-1/2 left-0 w-full h-0.5 bg-white/10 -z-10 transform -translate-y-1/2"></div>
            <div className="flex justify-between">
               {['投递简历', '专业初试', '挑战任务', '发放 Offer'].map((step, i) => (
-                 <div key={i} className="text-center bg-slate-900 px-4">
+                 <div key={i} className="text-center px-4">
                     <div className={`w-10 h-10 mx-auto rounded-full flex items-center justify-center font-bold mb-2 ${i===0 ? 'bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.5)]' : 'bg-slate-800 border border-white/20'}`}>
                         {i + 1}
                     </div>

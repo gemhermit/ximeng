@@ -7,14 +7,14 @@ const Partners: React.FC = () => {
     { name: '字节跳动', src: '/images/partners/bytedance.png' },
     { name: 'AWS', src: '/images/partners/aws.png' },
     { name: 'Azure', src: '/images/partners/azure.png' },
-    { name: '华为云', src: '/images/partners/3.png' },
+    { name: '华为云', src: '/images/partners/huawei.png' },
     { name: '百度云', src: '/images/partners/4.png' },
     { name: '清华大学', src: '/images/partners/5.png' },
     { name: '中国电信', src: '/images/partners/9.png' },
   ];
 
   const logosRow2 = [
-    { name: '上海交通大学', src: '/images/partners/6.png' },
+    { name: '上海交通大学', src: '/images/partners/sjtu.png' },
     { name: '中国科学院', src: '/images/partners/7.png' },
     { name: '中国建筑', src: '/images/partners/12.png' },
     { name: '阿里云', src: '/images/partners/11.png' },
