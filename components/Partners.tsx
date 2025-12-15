@@ -14,7 +14,7 @@ const Partners: React.FC = () => {
   ];
 
   const logosRow2 = [
-    { name: '上海交通大学', src: '/images/partners/sjtu.png' },
+    { name: '上海交通大学', src: '/images/partners/6.png' },
     { name: '中国科学院', src: '/images/partners/7.png' },
     { name: '中国建筑', src: '/images/partners/12.png' },
     { name: '阿里云', src: '/images/partners/11.png' },
