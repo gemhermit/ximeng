@@ -1,8 +1,9 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
-
-const gsap = (window as any).gsap;
+import gsap from 'gsap';
+import { jobsData } from '../data/jobs';
 
 const vision = [
     '我们以长期主义为核心，专注于建设面向未来的数字基础设施与智能服务能力。',
@@ -18,14 +19,6 @@ const tracks = [
     { title: '工程方向', items: ['前端/后端/嵌入式', 'DevOps/安全', '架构设计'] },
     { title: '产品方向', items: ['产品规划', '交互设计', '增长'] },
     { title: '行业解决方案', items: ['售前咨询', '交付与项目管理', '行业研究'] }
-];
-
-const jobs = [
-    { title: '嵌入式硬件工程师', dept: '硬件研发部', loc: '深圳', salary: '30k-60k', type: '全职' },
-    { title: '产品体验设计师', dept: '设计部', loc: '上海', salary: '25k-45k', type: '全职' },
-    { title: 'SaaS 架构师', dept: '售前技术部', loc: '北京', salary: '40k-70k', type: '全职' },
-    { title: '高级前端工程师', dept: 'Web 研发部', loc: '杭州', salary: '25k-45k', type: '全职' },
-    { title: 'AI 算法研究员', dept: 'AI Lab', loc: '北京', salary: '50k-80k', type: '全职' },
 ];
 
 const Careers: React.FC = () => {
@@ -133,16 +126,17 @@ const Careers: React.FC = () => {
                     </div>
                     
                     <div className="space-y-4">
-                        {jobs.map((job, i) => (
-                            <div key={i} className="job-item group p-6 rounded-xl bg-white/5 border border-white/5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        {jobsData.map((job, i) => (
+                            <Link to={`/careers/${job.id}`} key={i} className="job-item group p-6 rounded-xl bg-white/5 border border-white/5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-white/10 hover:border-white/20 hoverable">
                                 <div>
                                     <h4 className="text-xl font-bold text-white group-hover:text-green-400 transition-colors">{job.title}</h4>
                                     <p className="text-gray-400 mt-1 text-sm">{job.dept} · {job.loc} · {job.type}</p>
                                 </div>
                                 <div className="flex items-center gap-6">
                                     <span className="text-green-400 font-mono font-bold">{job.salary}</span>
+                                    <i className="fas fa-arrow-right text-gray-600 group-hover:text-white transition-colors"></i>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>

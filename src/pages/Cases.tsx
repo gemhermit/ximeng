@@ -3,8 +3,7 @@ import React, { useLayoutEffect, useRef, useMemo, useState, useEffect } from 're
 import { useLocation, Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { CASE_CATEGORIES, casesData, getCategoryImage, CaseItem } from '../data/cases';
-
-const gsap = (window as any).gsap;
+import gsap from 'gsap';
 
 const casesFlat: CaseItem[] = casesData;
 

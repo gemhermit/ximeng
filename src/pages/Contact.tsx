@@ -1,8 +1,7 @@
 
 import React, { useLayoutEffect, useRef } from 'react';
 import PageHeader from '../components/PageHeader';
-
-const gsap = (window as any).gsap;
+import gsap from 'gsap';
 
 const Contact: React.FC = () => {
     const containerRef = useRef(null);

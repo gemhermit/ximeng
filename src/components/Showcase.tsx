@@ -1,8 +1,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-
-const gsap = (window as any).gsap;
-const ScrollTrigger = (window as any).ScrollTrigger;
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const slides = [
   { id: 1, title: '工业制造', sub: 'INDUSTRIAL MANUFACTURING', desc: '产线自动化与预测维护，提升生产效率 35%，降低设备故障率 40%。', img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop', color: 'blue' },

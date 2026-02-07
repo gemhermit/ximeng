@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 interface PreloaderProps {
     loading: boolean;
@@ -8,7 +9,6 @@ const Preloader: React.FC<PreloaderProps> = ({ loading }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
     const lineRef = useRef<HTMLDivElement>(null);
-    const gsap = (window as any).gsap;
 
     useEffect(() => {
         if (!loading) {

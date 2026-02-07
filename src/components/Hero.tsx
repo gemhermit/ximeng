@@ -2,8 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import CosmicRing from './CosmicRing';
 import { Link } from 'react-router-dom';
-
-const gsap = (window as any).gsap;
+import gsap from 'gsap';
 
 const Hero: React.FC = () => {
   const comp = useRef(null);

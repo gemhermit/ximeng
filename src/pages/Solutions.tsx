@@ -3,8 +3,7 @@ import React, { useLayoutEffect, useRef, useMemo, useState, useEffect } from 're
 import { useLocation } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import TiltCard from '../components/TiltCard';
-
-const gsap = (window as any).gsap;
+import gsap from 'gsap';
 
 const solutionsData = [
     {

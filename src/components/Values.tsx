@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import TiltCard from './TiltCard';
-
-const gsap = (window as any).gsap;
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const Values: React.FC = () => {
   useEffect(() => {

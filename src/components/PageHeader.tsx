@@ -24,9 +24,15 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           {subtitle}
         </div>
         <h1 className="text-4xl md:text-6xl font-bold tracking-tighter">
-          <span className={`text-transparent bg-clip-text bg-gradient-to-r ${gradient}`}>
-            {title}
-          </span>
+          {gradient === "none" ? (
+            <span className="text-white">
+              {title}
+            </span>
+          ) : (
+            <span className={`text-transparent bg-clip-text bg-gradient-to-r ${gradient}`}>
+              {title}
+            </span>
+          )}
         </h1>
         <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mt-8"></div>
       </div>
