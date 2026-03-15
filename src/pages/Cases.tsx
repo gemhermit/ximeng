@@ -1,8 +1,8 @@
 
 import React, { useLayoutEffect, useRef, useMemo, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
-import { CASE_CATEGORIES, casesData, getCategoryImage, CaseItem } from '../data/cases';
+import PageHeader from '@/components/PageHeader';
+import { CASE_CATEGORIES, casesData, getCategoryImage, CaseItem } from '@/data/cases';
 import gsap from 'gsap';
 
 const casesFlat: CaseItem[] = casesData;

@@ -1,8 +1,8 @@
 
 import React, { useLayoutEffect, useRef, useMemo, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
-import TiltCard from '../components/TiltCard';
+import PageHeader from '@/components/PageHeader';
+import TiltCard from '@/components/TiltCard';
 import gsap from 'gsap';
 
 const solutionsData = [

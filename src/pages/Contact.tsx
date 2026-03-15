@@ -1,6 +1,6 @@
 
 import React, { useLayoutEffect, useRef } from 'react';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '@/components/PageHeader';
 import gsap from 'gsap';
 
 const Contact: React.FC = () => {

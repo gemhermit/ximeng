@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { jobsData } from '../data/jobs';
+import { jobsData } from '@/data/jobs';
 
 const Join: React.FC = () => {
   return (

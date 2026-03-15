@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
-import { casesData, getCategoryImage } from '../data/cases';
+import PageHeader from '@/components/PageHeader';
+import { casesData, getCategoryImage } from '@/data/cases';
 
 const CaseDetail: React.FC = () => {
   const { slug } = useParams();

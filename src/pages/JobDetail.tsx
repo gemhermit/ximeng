@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
-import { jobsData, JobItem } from '../data/jobs';
+import PageHeader from '@/components/PageHeader';
+import { jobsData, JobItem } from '@/data/jobs';
 import gsap from 'gsap';
 
 const JobDetail: React.FC = () => {

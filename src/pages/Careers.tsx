@@ -1,9 +1,9 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '@/components/PageHeader';
 import gsap from 'gsap';
-import { jobsData } from '../data/jobs';
+import { jobsData } from '@/data/jobs';
 
 const vision = [
     '我们以长期主义为核心，专注于建设面向未来的数字基础设施与智能服务能力。',

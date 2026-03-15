@@ -3,23 +3,23 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Cursor from './components/Cursor';
-import Preloader from './components/Preloader';
-import ScrollToTop from './components/ScrollToTop';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import Cursor from '@/components/Cursor';
+import Preloader from '@/components/Preloader';
+import ScrollToTop from '@/components/ScrollToTop';
 
 // Lazy load pages for performance optimization
-const LandingPage = lazy(() => import('./components/LandingPage'));
-const Solutions = lazy(() => import('./pages/Solutions'));
-const Cases = lazy(() => import('./pages/Cases'));
-const CaseDetail = lazy(() => import('./pages/CaseDetail'));
-const Careers = lazy(() => import('./pages/Careers'));
-const JobDetail = lazy(() => import('./pages/JobDetail'));
-const Contact = lazy(() => import('./pages/Contact'));
-const Privacy = lazy(() => import('./pages/Privacy'));
-const Terms = lazy(() => import('./pages/Terms'));
-const Sitemap = lazy(() => import('./pages/Sitemap'));
+const LandingPage = lazy(() => import('@/components/LandingPage'));
+const Solutions = lazy(() => import('@/pages/Solutions'));
+const Cases = lazy(() => import('@/pages/Cases'));
+const CaseDetail = lazy(() => import('@/pages/CaseDetail'));
+const Careers = lazy(() => import('@/pages/Careers'));
+const JobDetail = lazy(() => import('@/pages/JobDetail'));
+const Contact = lazy(() => import('@/pages/Contact'));
+const Privacy = lazy(() => import('@/pages/Privacy'));
+const Terms = lazy(() => import('@/pages/Terms'));
+const Sitemap = lazy(() => import('@/pages/Sitemap'));
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
