@@ -113,12 +113,12 @@ const Navbar: React.FC = () => {
     fixed z-50 transition-all duration-500 ease-in-out
     ${isVisible ? 'translate-y-0' : '-translate-y-[150%]'}
     ${useSolidStyle
-      ? 'top-2 left-2 right-2 md:top-4 md:left-1/2 md:-translate-x-1/2 md:w-3/4 max-w-5xl rounded-2xl md:rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]' 
+      ? 'top-2 left-2 right-2 md:top-4 md:left-1/2 md:-translate-x-1/2 md:w-3/4 max-w-5xl rounded-2xl md:rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_#00000080]'
       : 'top-0 left-0 w-full bg-transparent border-b border-white/5'}
   `;
 
   const navLinkClasses = "relative text-sm font-medium text-gray-300 hover:text-white transition-colors duration-300 py-2 group hoverable";
-  const underlineClasses = "absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] transition-all duration-300 group-hover:w-full";
+  const underlineClasses = "absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 shadow-[0_0_8px_#3b82f6cc] transition-all duration-300 group-hover:w-full";
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 

@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tighter mix-blend-lighten">
             <div className="overflow-hidden"><span className="block reveal-heading text-white">{text.headlineTop}</span></div>
             <div className="overflow-hidden">
-                <span className="block reveal-heading bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 text-transparent bg-clip-text filter drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]">
+                <span className="block reveal-heading bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 text-transparent bg-clip-text filter drop-shadow-[0_0_30px_#3b82f680]">
                     {text.headlineBottom}
                 </span>
             </div>
@@ -84,7 +84,7 @@ const Hero: React.FC = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 pt-4 reveal-text justify-center lg:justify-start">
             <Link to={route('/solutions')}>
-                <button className="px-8 py-4 bg-blue-600 text-white font-bold rounded hover:bg-blue-700 transition-all hoverable shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] hover:-translate-y-1 w-full sm:w-auto border border-blue-400/20">
+                <button className="px-8 py-4 bg-blue-600 text-white font-bold rounded hover:bg-blue-700 transition-all hoverable shadow-[0_0_40px_#2563eb66] hover:shadow-[0_0_60px_#2563eb99] hover:-translate-y-1 w-full sm:w-auto border border-blue-400/20">
                 {text.primary}
                 </button>
             </Link>

@@ -34,7 +34,7 @@ const Cursor: React.FC = () => {
         document.body.classList.add('hovering');
         outline.style.width = '60px';
         outline.style.height = '60px';
-        outline.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+        outline.style.backgroundColor = '#3b82f61a';
         outline.style.borderColor = 'transparent';
         outline.style.backdropFilter = 'blur(2px)';
       } else {
@@ -42,7 +42,7 @@ const Cursor: React.FC = () => {
         outline.style.width = '50px';
         outline.style.height = '50px';
         outline.style.backgroundColor = 'transparent';
-        outline.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+        outline.style.borderColor = '#3b82f680';
         outline.style.backdropFilter = 'none';
       }
     };

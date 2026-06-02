@@ -35,7 +35,7 @@ const Join: React.FC = () => {
            <div className="flex justify-between">
               {text.steps.map((step, i) => (
                  <div key={i} className="text-center w-32">
-                    <div className={`w-10 h-10 mx-auto rounded-full flex items-center justify-center font-bold mb-2 ${i===0 ? 'bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.5)]' : 'bg-slate-800 border border-white/20'}`}>
+                    <div className={`w-10 h-10 mx-auto rounded-full flex items-center justify-center font-bold mb-2 ${i===0 ? 'bg-blue-600 shadow-[0_0_15px_#2563eb80]' : 'bg-slate-800 border border-white/20'}`}>
                         {i + 1}
                     </div>
                     <div className="text-sm text-gray-400">{step}</div>
