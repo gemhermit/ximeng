@@ -2,7 +2,9 @@
 import React, { useLayoutEffect, useRef, useMemo, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
+import Seo from '@/components/Seo';
 import { CASE_CATEGORIES, casesData, getCategoryImage, CaseItem } from '@/data/cases';
+import { buildBreadcrumbSchema, buildItemListSchema } from '@/lib/seo';
 import gsap from 'gsap';
 
 const casesFlat: CaseItem[] = casesData;
@@ -46,49 +48,48 @@ const Cases: React.FC = () => {
         }
     }, [location, cats]);
 
-    const CaseCard = ({ item }: { item: CaseItem }) => (
+    const CaseCard = ({ item }: { key?: React.Key; item: CaseItem }) => (
         <div className="case-card group h-full">
-            <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-slate-900 transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1">
+            <Link
+                to={`/cases/${item.slug}`}
+                className="block relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-slate-900 transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1"
+            >
                 <div className="flex flex-col h-full">
-                    {/* Image Container - Aspect Ratio */}
                     <div className="relative w-full aspect-video md:aspect-[4/3] overflow-hidden bg-slate-800">
-                        <img 
-                            src={item.image || getCategoryImage(item.category)} 
-                            alt={item.title} 
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                            loading="lazy" 
+                        <img
+                            src={item.image || getCategoryImage(item.category)}
+                            alt={item.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
                     </div>
-                    
-                    {/* Content Container */}
+
                     <div className="p-6 flex flex-col flex-1 gap-4">
                         <div className="flex items-center justify-between">
                             <div className="text-xs text-blue-400 font-bold tracking-widest uppercase">{item.category}</div>
                         </div>
-                        
+
                         <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300 line-clamp-1">{item.title}</h3>
-                        
+
                         <p className="text-slate-300 text-sm leading-relaxed line-clamp-3 max-w-prose flex-1">
                             {item.summary}
                         </p>
-                        
+
                         <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
-                            <Link 
-                                to={`/cases/${item.slug}`} 
-                                className="inline-flex items-center gap-2 text-sm text-white font-medium hover:text-blue-400 transition-colors group-hover:translate-x-1 duration-300"
-                            >
+                            <span className="inline-flex items-center gap-2 text-sm text-white font-medium group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-300">
                                 查看详情
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
-                            </Link>
-                            
+                            </span>
+
                             {item.link && (
-                                <a 
-                                    href={item.link} 
-                                    target="_blank" 
-                                    rel="noreferrer" 
+                                <a
+                                    href={item.link}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={e => e.stopPropagation()}
                                     className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
                                 >
                                     外部链接 ↗
@@ -97,12 +98,32 @@ const Cases: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 
     return (
         <div ref={containerRef} className="min-h-screen bg-slate-950">
+            <Seo
+                title="创新案例"
+                description="查看羲梦科技在工业制造、教育平台、AI 文旅、云引擎服务、全域 AI 营销和 AI 硬件定制方向的 AI 解决方案案例。"
+                path="/cases"
+                image="/images/case-data.jpg"
+                keywords={[...CASE_CATEGORIES, 'AI 案例', '智能体案例', '企业数字化案例']}
+                structuredData={[
+                    buildBreadcrumbSchema([
+                        { name: '首页', path: '/' },
+                        { name: '创新案例', path: '/cases' },
+                    ]),
+                    buildItemListSchema(
+                        casesData.map((item) => ({
+                            name: item.title,
+                            path: `/cases/${item.slug}`,
+                        })),
+                        '羲梦科技创新案例',
+                    ),
+                ]}
+            />
             <PageHeader title="案例展示平台" subtitle="专业案例库" gradient="from-purple-400 via-pink-400 to-red-400" />
             <div className="container mx-auto px-4 sm:px-6 py-12">
                 {/* Filter Buttons */}

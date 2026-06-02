@@ -2,8 +2,10 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
+import Seo from '@/components/Seo';
 import gsap from 'gsap';
 import { jobsData } from '@/data/jobs';
+import { buildBreadcrumbSchema, buildItemListSchema } from '@/lib/seo';
 
 const vision = [
     '我们以长期主义为核心，专注于建设面向未来的数字基础设施与智能服务能力。',
@@ -66,6 +68,25 @@ const Careers: React.FC = () => {
 
     return (
         <div ref={containerRef} className="min-h-screen bg-slate-950">
+            <Seo
+                title="加入我们"
+                description="加入羲梦科技，参与 AI 解决方案、SaaS 平台、产品体验和行业数字化项目建设。查看全栈工程师、产品体验设计师、SaaS 架构师等开放职位。"
+                path="/careers"
+                keywords={['羲梦科技招聘', 'AI 公司招聘', ...jobsData.map((job) => job.title)]}
+                structuredData={[
+                    buildBreadcrumbSchema([
+                        { name: '首页', path: '/' },
+                        { name: '加入我们', path: '/careers' },
+                    ]),
+                    buildItemListSchema(
+                        jobsData.map((job) => ({
+                            name: job.title,
+                            path: `/careers/${job.id}`,
+                        })),
+                        '羲梦科技开放职位',
+                    ),
+                ]}
+            />
             <PageHeader title="加入我们" subtitle="Join The Future" gradient="from-green-400 via-emerald-400 to-teal-400" />
             
             <div className="container mx-auto px-6 py-20">

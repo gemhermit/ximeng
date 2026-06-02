@@ -1,6 +1,8 @@
 
 import React, { useLayoutEffect, useRef } from 'react';
 import PageHeader from '@/components/PageHeader';
+import Seo from '@/components/Seo';
+import { SITE, buildBreadcrumbSchema, buildOrganizationSchema } from '@/lib/seo';
 import gsap from 'gsap';
 
 const Contact: React.FC = () => {
@@ -27,6 +29,28 @@ const Contact: React.FC = () => {
 
     return (
         <div ref={containerRef} className="min-h-screen bg-slate-950">
+            <Seo
+                title="联系我们"
+                description="联系羲梦科技，咨询企业 AI 解决方案、智能体搭建、云引擎服务、全域 AI 营销、AI 硬件定制和数字化转型服务。"
+                path="/contact"
+                keywords={['联系羲梦科技', 'AI 解决方案咨询', '智能体搭建咨询', '数字化转型咨询']}
+                structuredData={[
+                    buildBreadcrumbSchema([
+                        { name: '首页', path: '/' },
+                        { name: '联系我们', path: '/contact' },
+                    ]),
+                    {
+                        ...buildOrganizationSchema(),
+                        contactPoint: {
+                            '@type': 'ContactPoint',
+                            telephone: SITE.phone,
+                            email: SITE.email,
+                            contactType: 'sales',
+                            availableLanguage: ['zh-CN', 'en'],
+                        },
+                    },
+                ]}
+            />
             <PageHeader title="联系我们" subtitle="Get In Touch" gradient="from-blue-400 via-indigo-500 to-purple-500" />
             
             <div className="container mx-auto px-6 py-20">

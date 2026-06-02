@@ -30,16 +30,17 @@ const TiltCard: React.FC<TiltCardProps> = ({ children, className = '', onClick }
   };
 
   return (
-    <div 
+    <div
       ref={cardRef}
-      className={`group perspective-1000 transform-style-3d cursor-pointer ${className}`}
+      className={`group perspective-1000 cursor-pointer ${className}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
     >
-      <div 
-        ref={innerRef} 
-        className="tilt-inner w-full h-full transition-transform duration-100 ease-out preserve-3d"
+      <div
+        ref={innerRef}
+        className="tilt-inner w-full h-full transition-transform duration-100 ease-out will-change-transform"
+        style={{ transformStyle: 'flat' }}
       >
         {children}
       </div>

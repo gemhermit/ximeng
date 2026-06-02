@@ -8,10 +8,12 @@ import Footer from '@/components/Footer';
 import Cursor from '@/components/Cursor';
 import Preloader from '@/components/Preloader';
 import ScrollToTop from '@/components/ScrollToTop';
+import { LanguageProvider } from '@/lib/i18n';
 
 // Lazy load pages for performance optimization
 const LandingPage = lazy(() => import('@/components/LandingPage'));
 const Solutions = lazy(() => import('@/pages/Solutions'));
+const SolutionDetail = lazy(() => import('@/pages/SolutionDetail'));
 const Cases = lazy(() => import('@/pages/Cases'));
 const CaseDetail = lazy(() => import('@/pages/CaseDetail'));
 const Careers = lazy(() => import('@/pages/Careers'));
@@ -34,8 +36,40 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const routes = (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/solutions" element={<Solutions />} />
+      <Route path="/solutions/:id" element={<SolutionDetail />} />
+      <Route path="/cases" element={<Cases />} />
+      <Route path="/cases/:slug" element={<CaseDetail />} />
+      <Route path="/careers" element={<Careers />} />
+      <Route path="/careers/:id" element={<JobDetail />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/sitemap" element={<Sitemap />} />
+
+      <Route path="/en" element={<LandingPage />} />
+      <Route path="/en/solutions" element={<Solutions />} />
+      <Route path="/en/solutions/:id" element={<SolutionDetail />} />
+      <Route path="/en/cases" element={<Cases />} />
+      <Route path="/en/cases/:slug" element={<CaseDetail />} />
+      <Route path="/en/careers" element={<Careers />} />
+      <Route path="/en/careers/:id" element={<JobDetail />} />
+      <Route path="/en/contact" element={<Contact />} />
+      <Route path="/en/privacy" element={<Privacy />} />
+      <Route path="/en/terms" element={<Terms />} />
+      <Route path="/en/sitemap" element={<Sitemap />} />
+
+      <Route path="/en/*" element={<Navigate to="/en" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+
   return (
     <BrowserRouter>
+      <LanguageProvider>
       <div className="relative w-full overflow-hidden bg-slate-950 text-white selection:bg-blue-500/30">
         <Cursor />
         <Preloader loading={loading} />
@@ -51,25 +85,13 @@ const App: React.FC = () => {
         
         <main className="relative z-10">
           <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
-            <Routes>
-               <Route path="/" element={<LandingPage />} />
-               <Route path="/solutions" element={<Solutions />} />
-               <Route path="/cases" element={<Cases />} />
-               <Route path="/cases/:slug" element={<CaseDetail />} />
-           <Route path="/careers" element={<Careers />} />
-           <Route path="/careers/:id" element={<JobDetail />} />
-           <Route path="/contact" element={<Contact />} />
-               <Route path="/privacy" element={<Privacy />} />
-               <Route path="/terms" element={<Terms />} />
-               <Route path="/sitemap" element={<Sitemap />} />
-               {/* Catch-all route: Redirects any unknown paths (like /home) back to Landing Page */}
-               <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            {routes}
           </Suspense>
         </main>
         
         <Footer />
       </div>
+      </LanguageProvider>
     </BrowserRouter>
   );
 };

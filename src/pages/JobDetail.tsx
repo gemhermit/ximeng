@@ -1,7 +1,9 @@
 import React, { useLayoutEffect, useRef, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
+import Seo from '@/components/Seo';
 import { jobsData, JobItem } from '@/data/jobs';
+import { buildBreadcrumbSchema } from '@/lib/seo';
 import gsap from 'gsap';
 
 const JobDetail: React.FC = () => {
@@ -40,6 +42,17 @@ const JobDetail: React.FC = () => {
 
     return (
         <div ref={containerRef} className="min-h-screen bg-slate-950">
+            <Seo
+                title={`${job.title}招聘`}
+                description={`羲梦科技${job.title}岗位招聘，部门：${job.dept}，地点：${job.loc}，薪资范围：${job.salary}，职位性质：${job.type}。${job.desc[0] ?? ''}`}
+                path={`/careers/${job.id}`}
+                keywords={[job.title, `${job.title}招聘`, job.dept, job.loc, '羲梦科技招聘']}
+                structuredData={buildBreadcrumbSchema([
+                    { name: '首页', path: '/' },
+                    { name: '加入我们', path: '/careers' },
+                    { name: job.title, path: `/careers/${job.id}` },
+                ])}
+            />
             <PageHeader title={job.title} subtitle="加入我们，共创未来" gradient="none" />
             
             <div className="container mx-auto px-6 py-12 md:py-20">

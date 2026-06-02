@@ -1,9 +1,21 @@
 import React from 'react';
 import PageHeader from '@/components/PageHeader';
+import Seo from '@/components/Seo';
+import { buildBreadcrumbSchema } from '@/lib/seo';
 
 const Terms: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-950">
+      <Seo
+        title="服务条款"
+        description="了解羲梦科技官网、产品、服务和内容的使用条件、知识产权、免责声明、责任限制和联系方式。"
+        path="/terms"
+        keywords={['羲梦科技服务条款', '服务条款', '网站使用条款']}
+        structuredData={buildBreadcrumbSchema([
+          { name: '首页', path: '/' },
+          { name: '服务条款', path: '/terms' },
+        ])}
+      />
       <PageHeader title="服务条款" subtitle="Terms of Service" gradient="from-blue-400 via-cyan-400 to-teal-400" />
 
       <div className="container mx-auto px-6 py-20">

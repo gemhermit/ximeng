@@ -99,7 +99,7 @@ const Modules: React.FC = () => {
                     </p>
 
                     <Link
-                      to={`/solutions#${mod.anchor}`}
+                      to={`/solutions/${mod.anchor}`}
                       className="flex items-center text-white font-bold text-sm tracking-wide mt-2 hoverable"
                     >
                       了解更多 <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>

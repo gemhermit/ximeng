@@ -1,10 +1,22 @@
 import React from 'react';
 import PageHeader from '@/components/PageHeader';
 import { Link } from 'react-router-dom';
+import Seo from '@/components/Seo';
+import { buildBreadcrumbSchema } from '@/lib/seo';
 
 const Privacy: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-950">
+      <Seo
+        title="隐私政策"
+        description="了解羲梦科技官网和服务如何收集、使用、保护和处理个人信息，以及用户在隐私保护方面的相关权利。"
+        path="/privacy"
+        keywords={['羲梦科技隐私政策', '隐私政策', '个人信息保护']}
+        structuredData={buildBreadcrumbSchema([
+          { name: '首页', path: '/' },
+          { name: '隐私政策', path: '/privacy' },
+        ])}
+      />
       <PageHeader title="隐私政策" subtitle="Privacy Policy" gradient="from-blue-400 via-cyan-400 to-teal-400" />
 
       <div className="container mx-auto px-6 py-20">
