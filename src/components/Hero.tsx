@@ -3,9 +3,24 @@ import React, { useEffect, useRef } from 'react';
 import CosmicRing from './CosmicRing';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
+import { useLanguage } from '@/lib/i18n';
 
 const Hero: React.FC = () => {
   const comp = useRef(null);
+  const { isEnglish, route } = useLanguage();
+  const text = isEnglish ? {
+    headlineTop: 'Redefine',
+    headlineBottom: 'Industry Boundaries',
+    body: <>We build the digital infrastructure beneath intelligent business.<br/>Across physical and virtual worlds, we help turn imagination into deployable industry capability.</>,
+    primary: 'Explore Solutions',
+    secondary: 'View Cases',
+  } : {
+    headlineTop: '重塑',
+    headlineBottom: '行业边界',
+    body: <>在无界的数字宇宙中，我们构建底层的数字基础设施。<br/>打破物理与虚拟的隔阂，让想象力在千行百业落地生根。</>,
+    primary: '探索方案',
+    secondary: '观看演示',
+  };
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -55,28 +70,27 @@ const Hero: React.FC = () => {
 
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tighter mix-blend-lighten">
-            <div className="overflow-hidden"><span className="block reveal-heading text-white">重塑</span></div>
+            <div className="overflow-hidden"><span className="block reveal-heading text-white">{text.headlineTop}</span></div>
             <div className="overflow-hidden">
                 <span className="block reveal-heading bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 text-transparent bg-clip-text filter drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]">
-                    行业边界
+                    {text.headlineBottom}
                 </span>
             </div>
           </h1>
           
           <p className="text-gray-300 text-base md:text-lg max-w-xl leading-relaxed reveal-text mx-auto lg:mx-0 font-light tracking-wide">
-            在无界的数字宇宙中，我们构建底层的数字基础设施。<br/>
-            打破物理与虚拟的隔阂，让想象力在千行百业落地生根。
+            {text.body}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 pt-4 reveal-text justify-center lg:justify-start">
-            <Link to="/solutions">
+            <Link to={route('/solutions')}>
                 <button className="px-8 py-4 bg-blue-600 text-white font-bold rounded hover:bg-blue-700 transition-all hoverable shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] hover:-translate-y-1 w-full sm:w-auto border border-blue-400/20">
-                探索方案
+                {text.primary}
                 </button>
             </Link>
-            <Link to="/cases">
+            <Link to={route('/cases')}>
                 <button className="px-8 py-4 border border-white/20 text-white rounded hover:bg-white/10 transition-all hoverable flex items-center justify-center gap-3 group w-full sm:w-auto backdrop-blur-sm">
-                <span>观看演示</span> 
+                <span>{text.secondary}</span> 
                 <i className="fas fa-play text-xs group-hover:translate-x-1 transition-transform text-blue-400"></i>
                 </button>
             </Link>

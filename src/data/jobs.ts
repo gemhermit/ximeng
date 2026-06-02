@@ -1,3 +1,5 @@
+import type { Language } from '@/lib/i18n';
+
 export interface JobItem {
     id: string;
     title: string;
@@ -15,7 +17,7 @@ export const jobsData: JobItem[] = [
         id: 'full-stack-engineer',
         title: '全栈工程师', 
         dept: '研发部', 
-        loc: '深圳', 
+        loc: '上海',
         salary: '30k-60k', 
         color: 'blue', 
         type: '全职',
@@ -57,7 +59,7 @@ export const jobsData: JobItem[] = [
         id: 'saas-architect',
         title: 'SaaS 架构师', 
         dept: '售前技术部', 
-        loc: '北京', 
+        loc: '上海',
         salary: '40k-70k', 
         color: 'green', 
         type: '全职',
@@ -75,3 +77,77 @@ export const jobsData: JobItem[] = [
         ]
     }
 ];
+
+export const jobsDataEn: JobItem[] = [
+    {
+        id: 'full-stack-engineer',
+        title: 'Full-Stack Engineer',
+        dept: 'R&D',
+        loc: 'Shanghai',
+        salary: '30k-60k',
+        color: 'blue',
+        type: 'Full-time',
+        desc: [
+            'Develop and maintain front-end and back-end capabilities for core company products.',
+            'Participate in system architecture design and optimize performance and scalability.',
+            'Work with product managers and designers to deliver requirements with high quality.',
+            'Own technical problem solving and research promising new technologies.'
+        ],
+        reqs: [
+            "Bachelor's degree or above in computer science or a related field, with 3+ years of full-stack development experience.",
+            'Extensive experience with React/Vue and familiarity with Node.js, Go, Java, or similar back-end languages.',
+            'Familiarity with database design, MySQL or MongoDB, and caching systems such as Redis.',
+            'Good coding standards and documentation habits; open-source project experience is a plus.'
+        ]
+    },
+    {
+        id: 'product-designer',
+        title: 'Product Experience Designer',
+        dept: 'Design',
+        loc: 'Shanghai',
+        salary: '25k-45k',
+        color: 'purple',
+        type: 'Full-time',
+        desc: [
+            'Design user experiences for B2B SaaS platforms and consumer-facing applications.',
+            'Participate in product requirement analysis and produce high-quality designs and interaction prototypes.',
+            'Build and maintain the product design system.',
+            'Follow design trends and continuously improve visual and interaction quality.'
+        ],
+        reqs: [
+            "Bachelor's degree or above in design or a related field, with 3+ years of internet product design experience.",
+            'Proficient with Figma, Sketch, Adobe XD, or similar design tools.',
+            'Strong visual taste, logical thinking, and attention to detail.',
+            'Experience with B2B dashboards or data visualization design is preferred.'
+        ]
+    },
+    {
+        id: 'saas-architect',
+        title: 'SaaS Architect',
+        dept: 'Pre-Sales Technology',
+        loc: 'Shanghai',
+        salary: '40k-70k',
+        color: 'green',
+        type: 'Full-time',
+        desc: [
+            'Design and select architecture for core SaaS platforms.',
+            'Lead solutions for high concurrency, high availability, microservice decomposition, and other key technical challenges.',
+            'Guide engineering teams on refactoring and performance optimization.',
+            'Participate in pre-sales technical conversations and provide solution consulting for customers.'
+        ],
+        reqs: [
+            "Bachelor's degree or above in computer science or a related field, with 5+ years of large-scale internet system architecture experience.",
+            'Proficient in Java, Go, or Node.js and familiar with microservice frameworks such as Spring Cloud and container orchestration such as Kubernetes.',
+            'Deep understanding of distributed systems; large-scale data processing experience is a plus.',
+            'Strong communication skills and team leadership.'
+        ]
+    }
+];
+
+export const getJobsData = (language: Language = 'zh') => (
+    language === 'en' ? jobsDataEn : jobsData
+);
+
+export const getJobById = (id?: string, language: Language = 'zh') => (
+    getJobsData(language).find(job => job.id === id)
+);

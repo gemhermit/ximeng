@@ -1,3 +1,5 @@
+import type { Language } from '@/lib/i18n';
+
 export type SolutionColor = 'blue' | 'green' | 'pink' | 'cyan' | 'purple' | 'orange';
 
 export interface SolutionItem {
@@ -167,4 +169,97 @@ export const solutionsData: SolutionItem[] = [
   },
 ];
 
-export const getSolutionById = (id?: string) => solutionsData.find(item => item.id === id);
+export const solutionsDataEn: SolutionItem[] = [
+  {
+    id: 'industrial',
+    title: 'Industrial AI Agent',
+    subtitle: 'Industrial Manufacturing',
+    desc: 'AI assistants for production sites, equipment operations, and industrial workflows.',
+    features: ['Equipment Monitoring', 'Work Order Review', 'Quality Traceability', 'Energy Analytics'],
+    icon: 'fa-industry',
+    color: 'blue',
+    image: '/images/solution-industrial.jpg',
+    metrics: ['Increase Capacity', 'Improve Productivity', 'Optimize Cost'],
+    overview: 'We build an intelligent collaboration layer around production lines, equipment ledgers, work orders, and quality traceability so operations, maintenance, quality, and management teams can make decisions from one shared data view.',
+    scenarios: ['Production-line monitoring and anomaly alerts', 'Maintenance work order routing, review, and closed-loop retrospectives', 'Batch quality traceability and issue localization', 'Energy, utilization, and capacity analytics'],
+    outcomes: ['Reduce manual troubleshooting time', 'Improve work order closure efficiency', 'Lower downtime and rework risk', 'Turn operational data into a reusable improvement asset'],
+  },
+  {
+    id: 'education',
+    title: 'EdTech Platform',
+    subtitle: 'Education Technology',
+    desc: 'An integrated platform for curriculum, teaching, assessment, and collaboration.',
+    features: ['Course Management', 'Question Bank & Assessment', 'Class Collaboration', 'Teacher Enablement'],
+    icon: 'fa-graduation-cap',
+    color: 'green',
+    image: '/images/solution-education.jpg',
+    metrics: ['Increase Engagement', 'Improve Teaching Quality', 'Enrich Learning Outcomes'],
+    overview: 'We unify course resources, teaching activities, assessments, and teacher development in one platform, helping schools, institutions, and teaching teams organize digital learning more efficiently.',
+    scenarios: ['Course content configuration and learning-path management', 'Question bank assembly, assessment, and learning feedback', 'Class collaboration, assignment workflows, and family-school communication', 'Teacher training, teaching research, and outcome showcase'],
+    outcomes: ['Reduce repetitive lesson-preparation work', 'Increase classroom interaction and learner participation', 'Feed assessment results back into teaching improvements', 'Build reusable curriculum and teaching assets'],
+  },
+  {
+    id: 'culture',
+    title: 'AI Cultural Tourism',
+    subtitle: 'Cultural Tourism',
+    desc: 'Digital services for scenic areas, museums, exhibitions, and cultural venues.',
+    features: ['AI Digital Guides', 'AI Tourism Videos', 'AI Content Narration', 'AI Event Operations'],
+    icon: 'fa-landmark',
+    color: 'pink',
+    image: '/images/solution-culture.jpg',
+    metrics: ['Increase Visitor Conversion', 'Enrich Experience', 'Data-Driven Operations'],
+    overview: 'For cultural tourism, exhibition halls, scenic areas, and city culture projects, we digitize narration, guide services, events, and communication content so cultural assets can reach visitors continuously and operate with better data.',
+    scenarios: ['AI digital-human guides and narration services', 'Tourism promotion videos and interactive content generation', 'Exhibition narration and multilingual adaptation', 'Event operations, booking conversion, and visitor behavior analytics'],
+    outcomes: ['Improve visitor reach and venue conversion', 'Create richer offline experiences', 'Lower content update and operation costs', 'Generate analyzable visitor behavior data'],
+  },
+  {
+    id: 'cloud',
+    title: 'Cloud Engine Services',
+    subtitle: 'Cloud Engine',
+    desc: 'A stable cloud foundation for AI applications, business systems, and elastic scaling.',
+    features: ['Container Orchestration', 'Elastic Scaling', 'Logs & Alerts', 'Canary Release'],
+    icon: 'fa-cloud',
+    color: 'cyan',
+    image: '/images/solution-cloud.jpg',
+    metrics: ['Reliable Launch', 'Elastic Growth', 'Observability'],
+    overview: 'We provide a stable cloud runtime foundation for AI applications and business systems, covering deployment, monitoring, scaling, release, and rollback so pilots can move smoothly into production-scale operation.',
+    scenarios: ['Containerized deployment and orchestration for AI applications', 'Peak-load elastic scaling and resource management', 'Log, trace, alert, and runtime-status monitoring', 'Canary release, version rollback, and automated operations'],
+    outcomes: ['Shorten launch cycles', 'Improve stability and observability', 'Support elastic business growth', 'Reduce operations response cost'],
+  },
+  {
+    id: 'marketing',
+    title: 'Omnichannel AI Marketing',
+    subtitle: 'AI Marketing',
+    desc: 'Data-driven content generation, distribution, and campaign measurement.',
+    features: ['Creative Generation', 'Smart Distribution', 'Performance Evaluation', 'Data Integration'],
+    icon: 'fa-bullseye',
+    color: 'purple',
+    image: '/images/solution-marketing.jpg',
+    metrics: ['Increase Conversion', 'Reduce Cost', 'Unify Data'],
+    overview: 'We connect user data, channel data, content production, and performance evaluation so brands can generate assets faster, reach users more accurately, and review campaign results with clarity across channels.',
+    scenarios: ['Marketing creative generation and multi-version testing', 'Channel strategy configuration and intelligent distribution', 'User profile, lead data, and conversion-path integration', 'Campaign performance evaluation and review dashboards'],
+    outcomes: ['Increase content production efficiency', 'Lower acquisition and trial-and-error costs', 'Unify cross-channel data views', 'Make marketing decisions closer to real conversion signals'],
+  },
+  {
+    id: 'hardware',
+    title: 'Custom AI Hardware',
+    subtitle: 'AI Hardware',
+    desc: 'Custom edge-computing hardware, firmware, and product prototypes built for specific scenarios.',
+    features: ['AI Mouse', 'AI Companion Devices', 'AI Learning Devices', 'AI Development Kits'],
+    icon: 'fa-microchip',
+    color: 'orange',
+    image: '/images/solution-hardware.jpg',
+    metrics: ['Fast Validation', 'Custom Form Factor', 'Scenario Fit'],
+    overview: 'For edge intelligence, interaction devices, and vertical hardware scenarios, we provide custom services from form planning, board selection, and algorithm adaptation to firmware integration and pilot production.',
+    scenarios: ['Custom AI mice, learning devices, companion devices, and similar products', 'Edge-computing board and sensor-solution selection', 'On-device adaptation for voice, vision, and interaction algorithms', 'Development kits, prototype validation, and small-batch rollout'],
+    outcomes: ['Shorten hardware validation cycles', 'Lower the barrier to edge AI deployment', 'Support differentiated product forms', 'Improve software-hardware integration stability'],
+  },
+];
+
+export const getSolutionsData = (language: Language = 'zh') => (
+  language === 'en' ? solutionsDataEn : solutionsData
+);
+
+export const getSolutionById = (id?: string, language: Language = 'zh') => (
+  getSolutionsData(language).find(item => item.id === id)
+);

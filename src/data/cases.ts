@@ -1,3 +1,5 @@
+import type { Language } from '@/lib/i18n';
+
 export type CaseItem = {
   slug: string;
   title: string;
@@ -22,6 +24,15 @@ export const categories: CaseCategory[] = [
   { id: 'cloud', name: '云引擎服务' },
   { id: 'marketing', name: '全域 AI 营销' },
   { id: 'hardware', name: 'AI 硬件' },
+];
+
+export const categoriesEn: CaseCategory[] = [
+  { id: 'industrial', name: 'Industrial Manufacturing' },
+  { id: 'education', name: 'Education Platform' },
+  { id: 'culture', name: 'AI Cultural Tourism' },
+  { id: 'cloud', name: 'Cloud Engine Services' },
+  { id: 'marketing', name: 'Omnichannel AI Marketing' },
+  { id: 'hardware', name: 'AI Hardware' },
 ];
 
 export const casesData: CaseItem[] = [
@@ -164,15 +175,167 @@ export const casesData: CaseItem[] = [
 ];
 
 export const CASE_CATEGORIES = categories.map(c => c.name);
+export const CASE_CATEGORIES_EN = categoriesEn.map(c => c.name);
+
+export const casesDataEn: CaseItem[] = [
+  {
+    slug: 'culture-coming-soon',
+    title: 'City Tourism Promotion Video Production',
+    summary: 'Efficient, cost-effective, high-quality tourism promotion content that helps cities strengthen destination branding.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Virtual%20tourism%20concept%2C%20VR%20headset%20view%20of%20ancient%20landmarks%2C%20digital%20cultural%20heritage%2C%20future%20travel&image_size=landscape_4_3',
+    category: 'AI Cultural Tourism',
+    achievements: ['Experience optimization potential', 'Content ecosystem expansion'],
+    scope: ['Smart guide services', 'Content generation'],
+    story: 'Using AI scriptwriting, AI-generated visuals, music, and video materials plus human editing, we shorten production cycles and reduce labor and resource investment for tourism campaigns that need fast distribution and broad reach.',
+  },
+  {
+    slug: 'cloud-foundation',
+    title: 'Coze Agent Buildout Service',
+    summary: 'Built dozens of deployed agents across enterprise management, education, e-commerce, legal services, and other fields.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Enterprise%20cloud%20infrastructure%20server%20room%20with%20blue%20neon%20lights%2C%20data%20center%2C%20high%20tech%2C%20secure%20hosting%2C%20cinematic%20lighting&image_size=landscape_4_3',
+    category: 'Cloud Engine Services',
+    achievements: ['Shorter fault localization time', 'Higher service stability'],
+    scope: ['Container orchestration', 'Elastic scaling', 'Logs, metrics, and alerts', 'Canary release and rollback'],
+    story: 'Based on Coze low-code build capabilities, we provide end-to-end services from requirement analysis and workflow construction to deployment and integration. Agents can be published across channels such as WeChat, Douyin, and Lark, lowering the threshold for enterprise AI agent delivery.',
+  },
+  {
+    slug: 'cloud-observability',
+    title: 'Hiagent Joint Solution on Ascend Bare-Metal Servers',
+    summary: 'Led a domestic joint solution with Volcano Engine and Huawei, serving benchmark projects in industrial, communications, and government scenarios.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Futuristic%20cloud%20monitoring%20dashboard%20interface%20with%20graphs%20and%20alerts%2C%20dark%20mode%2C%20cybersecurity%20center%2C%20data%20visualization&image_size=landscape_4_3',
+    category: 'Cloud Engine Services',
+    achievements: ['High-concurrency data processing', 'Large-scale model training support'],
+    scope: ['Log collection', 'Hardware plus AI', 'Cloud platform'],
+    story: 'The solution combines Volcano Engine cloud resources with Huawei Ascend hardware to create a coordinated architecture across hardware, AI algorithms, and cloud platform capabilities, supporting complex workloads such as high-concurrency data processing and large-scale model training.',
+  },
+  {
+    slug: 'ai-marketing-suite',
+    title: 'Multi-Brand Digital Human Live Streaming',
+    summary: 'Covers asset generation, intelligent distribution, and performance evaluation to raise conversion while reducing cost.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Digital%20marketing%20AI%20concept%2C%20glowing%20nodes%20connecting%20social%20media%20icons%2C%20analytics%20growth%20chart%2C%20purple%20and%20blue%20gradient&image_size=landscape_4_3',
+    category: 'Omnichannel AI Marketing',
+    achievements: ['Automated asset production', 'Higher channel reach efficiency', 'Measurable conversion results'],
+    scope: ['Content generation', 'Channel distribution', 'Performance analysis and attribution'],
+    story: 'We provide always-on live streaming services across platforms such as Taobao, JD.com, Pinduoduo, and Meituan. AI scripts, real-time comment responses, and dynamic product-link switching address the high cost, unstable IP, and off-peak traffic waste of traditional live commerce.',
+  },
+  {
+    slug: 'short-video-generator',
+    title: 'Automated Marketing Short-Video Generation',
+    summary: 'Generates high-performing copy for Douyin, Taobao, Xiaohongshu, and other platforms, adapting to different platform styles to improve clicks and conversion.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=AI%20generating%20short%20videos%20on%20a%20smartphone%20screen%2C%20video%20editing%20timeline%2C%20creative%20content%20creation%2C%20modern%20studio&image_size=landscape_4_3',
+    category: 'Omnichannel AI Marketing',
+    achievements: ['Higher production efficiency', 'Multi-channel reach coverage'],
+    scope: ['Script generation', 'Template configuration', 'Channel distribution'],
+    story: 'Using web-wide trend data and high-quality industry copy libraries, AI analyzes viral content patterns and quickly produces marketing materials, helping teams overcome limited staffing and slow content production while lowering creation time costs.',
+  },
+  {
+    slug: 'edge-ai-hardware',
+    title: 'Custom Edge AI Hardware',
+    summary: 'Custom boards and firmware for vision, voice, and other scenarios, enabling low-power and rapid deployment.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Close%20up%20of%20advanced%20microchip%20processor%20on%20circuit%20board%2C%20edge%20computing%2C%20hardware%20engineering%2C%20macro%20photography&image_size=landscape_4_3',
+    category: 'AI Hardware',
+    achievements: ['Low-power edge operation', 'Shorter delivery cycle', 'Better scenario fit'],
+    scope: ['Hardware selection', 'Firmware development', 'Algorithm adaptation', 'Edge deployment'],
+    story: 'We customize software and hardware around real operating scenarios, forming an engineering method focused on intelligent tooling and low-power optimization.',
+  },
+  {
+    slug: 'e-ink-smart-notebook',
+    title: 'E-Ink Smart Notebook',
+    summary: 'Uses electronic ink for long battery life and comfortable reading, paired with AI notes and knowledge management. It supports a six-color HD e-ink display, 30-second casting, zero-power operation, no battery, no charging, and compatibility with major phone brands.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=E-ink%20digital%20notebook%20tablet%20on%20a%20minimalist%20wooden%20desk%20with%20coffee%2C%20paper-like%20display%2C%20stylus%20pen%2C%20productivity&image_size=landscape_4_3',
+    category: 'AI Hardware',
+    achievements: ['Optimized reading and writing experience', 'Significantly longer battery life'],
+    scope: ['Device design', 'Note synchronization', 'Knowledge management'],
+    story: 'Powered by an R-nergy RF energy algorithm and self-developed chip, the dedicated app supports AI drawing, DIY customization, and NFC transfer, addressing the limited functionality and frequent replacement needs of traditional phone cases while supporting personal expression.',
+  },
+  {
+    slug: 'ai-mouse-assistant',
+    title: 'AI Mouse Assistant',
+    summary: 'Integrates shortcuts and voice interaction at the mouse firmware layer to improve office and creative productivity.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Sleek%20modern%20computer%20mouse%20with%20AI%20voice%20assistant%20button%2C%20ergonomic%20design%2C%20office%20workspace%2C%20technology%20product&image_size=landscape_4_3',
+    category: 'AI Hardware',
+    achievements: ['Higher operation efficiency', 'Shortcut coverage across multiple applications'],
+    scope: ['Firmware command mapping', 'Voice integration', 'Multi-app adaptation'],
+    story: 'Integrated with the iFlytek Spark large model and wireless power plus RF communication technology, the zero-power design supports office reporting, teaching presentations, and cross-language communication, extending the mouse beyond a basic interaction device.',
+  },
+  {
+    slug: 'ai-painting-machine',
+    title: 'AI Painting All-in-One Machine',
+    summary: 'An integrated content-generation device that supports stylized painting and batch asset production.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Robotic%20arm%20creating%20digital%20art%20on%20a%20screen%2C%20generative%20AI%20art%20tool%2C%20colorful%20abstract%20painting%2C%20creative%20studio&image_size=landscape_4_3',
+    category: 'AI Hardware',
+    achievements: ['Batch asset generation', 'Fast switching across styles'],
+    scope: ['Model fine-tuning', 'Style templates', 'Batch production workflow'],
+    story: 'For content production scenarios, we package reusable style templates and batch workflows to improve creative efficiency. The device integrates a 43-inch HD touch screen, Intel i5 motherboard, and Hiti525 printer, supporting text-to-image and image-to-image workflows for tourism check-ins and commercial traffic acquisition.',
+  },
+  {
+    slug: 'edtech-platform',
+    title: 'Integrated EdTech Platform',
+    summary: 'Focuses on teaching research, instruction, assessment, and collaboration with a unified multi-device experience.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Online%20education%20platform%20interface%20showing%20video%20courses%20and%20progress%20bars%2C%20students%20collaborating%2C%20e-learning%20concept&image_size=landscape_4_3',
+    category: 'Education Platform',
+    achievements: ['Standardized teaching processes', 'Higher learning participation'],
+    scope: ['Course management', 'Question bank and assessment', 'Class collaboration', 'Family-school communication'],
+    story: 'The platform unifies teaching and management data for refined operations across teaching, training, operations, and safety. Specialized agents support the shift from manual processes to AI-assisted workflows for K12 schools, vocational colleges, and training institutions.',
+  },
+  {
+    slug: 'smart-assessment',
+    title: 'Hailiang Education Group AI Agent Buildout',
+    summary: 'Delivered multiple benchmark agents for enrollment, management, teaching, and other education scenarios.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Data%20analytics%20dashboard%20for%20education%2C%20student%20performance%20metrics%2C%20radar%20charts%2C%20smart%20assessment%20system&image_size=landscape_4_3',
+    category: 'Education Platform',
+    achievements: ['Multiple benchmark agents delivered', 'Adapted to diverse education scenarios'],
+    scope: ['Agent buildout', 'Scenario adaptation', 'Requirement analysis'],
+    story: 'We identified Hailiang Education Group core business pain points and used agents to support school planning, teaching management, student services, and other workflows, improving management precision and reducing manual data-analysis cost.',
+  },
+  {
+    slug: 'industrial-agent',
+    title: 'Dongfeng Group Custom Agent Cluster',
+    summary: 'Connected equipment and business workflows for monitoring, work orders, and quality traceability. Delivered more than 30 industrial agents across R&D, sales, training, and other scenarios.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Smart%20factory%20interior%20with%20automated%20machinery%2C%20IoT%20sensors%20overlay%2C%20industrial%20internet%20of%20things%2C%20manufacturing&image_size=landscape_4_3',
+    category: 'Industrial Manufacturing',
+    achievements: ['Reduced downtime', 'Optimized production takt'],
+    scope: ['Equipment integration', 'Work order orchestration', 'Quality traceability'],
+    story: 'In a complex production environment, the agent cluster enabled data collection and decision loops for continuous production optimization. It matched more than ten distinctive business scenarios across Dongfeng Group, connecting document knowledge extraction, financial analysis, sales-script generation, and employee-training support.',
+  },
+  {
+    slug: 'quality-dashboard',
+    title: 'China State Construction AI Curtain-Wall Agent System',
+    summary: 'A quality monitoring and anomaly-analysis system for production scenarios, enabling closed-loop management and rapid photovoltaic curtain-wall design-scheme generation.',
+    image: 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=Industrial%20quality%20control%20monitoring%20screen%2C%20defect%20detection%20AI%2C%20production%20line%20background%2C%20high%20tech&image_size=landscape_4_3',
+    category: 'Industrial Manufacturing',
+    achievements: ['Higher defect localization efficiency', 'Lower rework rate'],
+    scope: ['AI designer', 'Photovoltaic curtain-wall design', 'Design-scheme generation'],
+    story: 'Based on conversational interaction, the AI designer can generate design schemes from requirements, greatly shortening building design cycles and reducing repetitive drafting work for engineering teams that need efficient implementation.',
+  },
+];
+
+export const getCaseCategories = (language: Language = 'zh') => (
+  language === 'en' ? CASE_CATEGORIES_EN : CASE_CATEGORIES
+);
+
+export const getCasesData = (language: Language = 'zh') => (
+  language === 'en' ? casesDataEn : casesData
+);
+
+export const getCaseBySlug = (slug?: string, language: Language = 'zh') => (
+  getCasesData(language).find(c => c.slug === slug)
+);
 
 export const getCategoryImage = (name: string) => {
   switch (name) {
     case '工业制造': return '/images/solution-industrial.jpg';
+    case 'Industrial Manufacturing': return '/images/solution-industrial.jpg';
     case '教育平台': return '/images/solution-education.jpg';
+    case 'Education Platform': return '/images/solution-education.jpg';
     case '云引擎服务': return '/images/solution-cloud.jpg';
+    case 'Cloud Engine Services': return '/images/solution-cloud.jpg';
     case '全域 AI 营销': return '/images/solution-marketing.jpg';
+    case 'Omnichannel AI Marketing': return '/images/solution-marketing.jpg';
     case 'AI 硬件': return '/images/solution-hardware.jpg';
+    case 'AI Hardware': return '/images/solution-hardware.jpg';
     case 'AI 文旅': return '/images/solution-culture.jpg';
+    case 'AI Cultural Tourism': return '/images/solution-culture.jpg';
     default: return '/images/solution-1.jpg';
   }
 };

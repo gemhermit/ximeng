@@ -1,25 +1,60 @@
-import React, { useLayoutEffect, useRef, useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import React, { useLayoutEffect, useRef } from 'react';
+import { useParams, Navigate, Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
 import Seo from '@/components/Seo';
-import { jobsData, JobItem } from '@/data/jobs';
+import { getJobById } from '@/data/jobs';
 import { buildBreadcrumbSchema } from '@/lib/seo';
+import { useLanguage } from '@/lib/i18n';
 import gsap from 'gsap';
 
 const JobDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
     const containerRef = useRef(null);
-    const [job, setJob] = useState<JobItem | null>(null);
-
-    useEffect(() => {
-        const found = jobsData.find(j => j.id === id);
-        if (found) {
-            setJob(found);
-        } else {
-            navigate('/careers');
-        }
-    }, [id, navigate]);
+    const { isEnglish, language, route } = useLanguage();
+    const job = getJobById(id, language);
+    const text = isEnglish ? {
+        titleSuffix: 'Hiring',
+        descriptionPrefix: 'Ximeng Tech is hiring',
+        dept: 'Department',
+        loc: 'Location',
+        salary: 'Salary Range',
+        type: 'Type',
+        subtitle: 'Join us and build the future',
+        back: 'Back to Open Roles',
+        responsibilities: 'Responsibilities',
+        requirements: 'Requirements',
+        applyTitle: 'How to Apply',
+        applyCopy: 'Please send your resume to',
+        subjectFormat: 'Email subject format:',
+        subjectExample: 'Role - Name',
+        applyNow: 'Apply Now',
+        overview: 'Role Overview',
+        submit: 'Submit Resume',
+        home: 'Home',
+        careers: 'Careers',
+        keywordHiring: 'hiring',
+    } : {
+        titleSuffix: '招聘',
+        descriptionPrefix: '羲梦科技',
+        dept: '部门',
+        loc: '地点',
+        salary: '薪资范围',
+        type: '性质',
+        subtitle: '加入我们，共创未来',
+        back: '返回职位列表',
+        responsibilities: '岗位职责',
+        requirements: '任职要求',
+        applyTitle: '如何申请',
+        applyCopy: '请将您的简历发送至',
+        subjectFormat: '邮件标题格式为：',
+        subjectExample: '应聘职位-姓名',
+        applyNow: '立即申请',
+        overview: '职位概览',
+        submit: '投递简历',
+        home: '首页',
+        careers: '加入我们',
+        keywordHiring: '招聘',
+    };
 
     useLayoutEffect(() => {
         if (!job) return;
@@ -38,27 +73,33 @@ const JobDetail: React.FC = () => {
         return () => ctx.revert();
     }, [job]);
 
-    if (!job) return null;
+    if (!job) return <Navigate to={route('/careers')} replace />;
+
+    const mailSubject = isEnglish
+        ? `Application for ${job.title} - ${job.dept}`
+        : `应聘${job.title}-${job.dept}`;
 
     return (
         <div ref={containerRef} className="min-h-screen bg-slate-950">
             <Seo
-                title={`${job.title}招聘`}
-                description={`羲梦科技${job.title}岗位招聘，部门：${job.dept}，地点：${job.loc}，薪资范围：${job.salary}，职位性质：${job.type}。${job.desc[0] ?? ''}`}
+                title={isEnglish ? `${job.title} ${text.titleSuffix}` : `${job.title}${text.titleSuffix}`}
+                description={isEnglish
+                    ? `${text.descriptionPrefix} ${job.title}. Department: ${job.dept}. Location: ${job.loc}. Salary: ${job.salary}. Type: ${job.type}. ${job.desc[0] ?? ''}`
+                    : `${text.descriptionPrefix}${job.title}岗位招聘，部门：${job.dept}，地点：${job.loc}，薪资范围：${job.salary}，职位性质：${job.type}。${job.desc[0] ?? ''}`}
                 path={`/careers/${job.id}`}
-                keywords={[job.title, `${job.title}招聘`, job.dept, job.loc, '羲梦科技招聘']}
+                keywords={[job.title, `${job.title} ${text.keywordHiring}`, job.dept, job.loc, isEnglish ? 'Ximeng Tech careers' : '羲梦科技招聘']}
                 structuredData={buildBreadcrumbSchema([
-                    { name: '首页', path: '/' },
-                    { name: '加入我们', path: '/careers' },
-                    { name: job.title, path: `/careers/${job.id}` },
+                    { name: text.home, path: route('/') },
+                    { name: text.careers, path: route('/careers') },
+                    { name: job.title, path: route(`/careers/${job.id}`) },
                 ])}
             />
-            <PageHeader title={job.title} subtitle="加入我们，共创未来" gradient="none" />
+            <PageHeader title={job.title} subtitle={text.subtitle} gradient="none" />
             
             <div className="container mx-auto px-6 py-12 md:py-20">
                 {/* Back Link */}
-                <Link to="/careers" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors anim-up">
-                    <i className="fas fa-arrow-left"></i> 返回职位列表
+                <Link to={route('/careers')} className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors anim-up">
+                    <i className="fas fa-arrow-left"></i> {text.back}
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -68,19 +109,19 @@ const JobDetail: React.FC = () => {
                         <div className="lg:hidden bg-white/5 border border-white/10 rounded-2xl p-6 anim-up">
                             <div className="space-y-4">
                                 <div>
-                                    <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">部门</div>
+                                    <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.dept}</div>
                                     <div className="font-bold text-white">{job.dept}</div>
                                 </div>
                                 <div>
-                                    <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">地点</div>
+                                    <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.loc}</div>
                                     <div className="font-bold text-white">{job.loc}</div>
                                 </div>
                                 <div>
-                                    <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">薪资范围</div>
+                                    <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.salary}</div>
                                     <div className={`font-bold text-${job.color}-400`}>{job.salary}</div>
                                 </div>
                                 <div>
-                                    <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">性质</div>
+                                    <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.type}</div>
                                     <div className="font-bold text-white">{job.type}</div>
                                 </div>
                             </div>
@@ -89,7 +130,7 @@ const JobDetail: React.FC = () => {
                         <div className="anim-up">
                             <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
                                 <span className={`w-2 h-8 rounded bg-${job.color}-500 block`}></span>
-                                岗位职责
+                                {text.responsibilities}
                             </h3>
                             <ul className="space-y-4">
                                 {job.desc.map((item, i) => (
@@ -104,7 +145,7 @@ const JobDetail: React.FC = () => {
                         <div className="anim-up">
                             <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
                                 <span className={`w-2 h-8 rounded bg-${job.color}-500 block`}></span>
-                                任职要求
+                                {text.requirements}
                             </h3>
                             <ul className="space-y-4">
                                 {job.reqs.map((item, i) => (
@@ -117,15 +158,15 @@ const JobDetail: React.FC = () => {
                         </div>
 
                         <div className="anim-up pt-8 border-t border-white/10">
-                            <h3 className="text-xl font-bold mb-4">如何申请</h3>
+                            <h3 className="text-xl font-bold mb-4">{text.applyTitle}</h3>
                             <p className="text-gray-400 mb-6">
-                                请将您的简历发送至 <a href="mailto:echo@ximengtech.cn" className="text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">echo@ximengtech.cn</a>，邮件标题格式为：<span className="text-white bg-white/10 px-2 py-0.5 rounded">应聘职位-姓名</span>。
+                                {text.applyCopy} <a href="mailto:echo@ximengtech.cn" className="text-white hover:underline decoration-blue-500 underline-offset-4 transition-all">echo@ximengtech.cn</a>{isEnglish ? '. ' : '，'}{text.subjectFormat}<span className="text-white bg-white/10 px-2 py-0.5 rounded">{text.subjectExample}</span>{isEnglish ? '.' : '。'}
                             </p>
                             <a 
-                                href={`mailto:echo@ximengtech.cn?subject=应聘${job.title}-${job.dept}`} 
+                                href={`mailto:echo@ximengtech.cn?subject=${encodeURIComponent(mailSubject)}`} 
                                 className={`inline-flex items-center gap-2 px-8 py-4 bg-${job.color}-600 hover:bg-${job.color}-700 text-white font-bold rounded-lg transition-all hoverable shadow-lg shadow-${job.color}-900/20`}
                             >
-                                <i className="fas fa-paper-plane"></i> 立即申请
+                                <i className="fas fa-paper-plane"></i> {text.applyNow}
                             </a>
                         </div>
                     </div>
@@ -134,31 +175,31 @@ const JobDetail: React.FC = () => {
                     <div className="hidden lg:block">
                         <div className="sticky top-32 anim-up">
                             <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
-                                <h4 className="text-xl font-bold mb-6 border-b border-white/10 pb-4">职位概览</h4>
+                                <h4 className="text-xl font-bold mb-6 border-b border-white/10 pb-4">{text.overview}</h4>
                                 <div className="space-y-6">
                                     <div>
-                                        <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">部门</div>
+                                        <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.dept}</div>
                                         <div className="font-bold text-white text-lg">{job.dept}</div>
                                     </div>
                                     <div>
-                                        <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">地点</div>
+                                        <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.loc}</div>
                                         <div className="font-bold text-white text-lg">{job.loc}</div>
                                     </div>
                                     <div>
-                                        <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">薪资范围</div>
+                                        <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.salary}</div>
                                         <div className={`font-bold text-${job.color}-400 text-2xl font-mono`}>{job.salary}</div>
                                     </div>
                                     <div>
-                                        <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">性质</div>
+                                        <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.type}</div>
                                         <div className="font-bold text-white text-lg">{job.type}</div>
                                     </div>
                                 </div>
                                 <div className="mt-8 pt-6 border-t border-white/10">
                                     <a 
-                                        href={`mailto:echo@ximengtech.cn?subject=应聘${job.title}-${job.dept}`} 
+                                        href={`mailto:echo@ximengtech.cn?subject=${encodeURIComponent(mailSubject)}`} 
                                         className={`block w-full text-center py-3 bg-${job.color}-600 hover:bg-${job.color}-700 text-white font-bold rounded transition-all hoverable`}
                                     >
-                                        投递简历
+                                        {text.submit}
                                     </a>
                                 </div>
                             </div>

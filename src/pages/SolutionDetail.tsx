@@ -3,13 +3,39 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
 import Seo from '@/components/Seo';
 import { getSolutionById, solutionColorClasses } from '@/data/solutions';
-import { absoluteUrl, buildBreadcrumbSchema } from '@/lib/seo';
+import { absoluteUrl, buildBreadcrumbSchema, getSiteMeta } from '@/lib/seo';
+import { useLanguage } from '@/lib/i18n';
 import gsap from 'gsap';
 
 const SolutionDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const containerRef = useRef(null);
-  const solution = getSolutionById(id);
+  const { isEnglish, language, route } = useLanguage();
+  const site = getSiteMeta(language);
+  const solution = getSolutionById(id, language);
+  const text = isEnglish ? {
+    home: 'Home',
+    solutions: 'Solutions',
+    back: 'Back to Solutions',
+    overview: 'Solution Overview',
+    capabilities: 'Core Capabilities',
+    scenarios: 'Use Cases',
+    outcomes: 'Business Value',
+    ctaTitle: 'Want to discuss this solution further?',
+    ctaDesc: 'We can quickly map a practical pilot path around your current business process.',
+    cta: 'Contact Us',
+  } : {
+    home: '首页',
+    solutions: '解决方案',
+    back: '返回核心业务',
+    overview: '方案概览',
+    capabilities: '核心能力',
+    scenarios: '应用场景',
+    outcomes: '业务价值',
+    ctaTitle: '需要进一步沟通该方案？',
+    ctaDesc: '我们可以基于现有业务流程，快速梳理可落地的试点路径。',
+    cta: '立即咨询',
+  };
 
   useLayoutEffect(() => {
     if (!solution) return;
@@ -29,7 +55,7 @@ const SolutionDetail: React.FC = () => {
   }, [solution]);
 
   if (!solution) {
-    return <Navigate to="/solutions" replace />;
+    return <Navigate to={route('/solutions')} replace />;
   }
 
   const color = solutionColorClasses[solution.color];
@@ -44,9 +70,9 @@ const SolutionDetail: React.FC = () => {
         keywords={[solution.title, solution.subtitle, ...solution.features, ...solution.scenarios]}
         structuredData={[
           buildBreadcrumbSchema([
-            { name: '首页', path: '/' },
-            { name: '解决方案', path: '/solutions' },
-            { name: solution.title, path: `/solutions/${solution.id}` },
+            { name: text.home, path: route('/') },
+            { name: text.solutions, path: route('/solutions') },
+            { name: solution.title, path: route(`/solutions/${solution.id}`) },
           ]),
           {
             '@context': 'https://schema.org',
@@ -57,19 +83,19 @@ const SolutionDetail: React.FC = () => {
             image: absoluteUrl(solution.image),
             provider: {
               '@type': 'Organization',
-              name: '羲梦科技',
+              name: site.name,
             },
             areaServed: 'CN',
-            url: absoluteUrl(`/solutions/${solution.id}`),
+            url: absoluteUrl(route(`/solutions/${solution.id}`)),
           },
         ]}
       />
       <PageHeader title={solution.title} subtitle={solution.subtitle} gradient={color.gradient} />
 
       <div className="container mx-auto px-6 py-12 md:py-16">
-        <Link to={`/solutions#${solution.id}`} className="solution-detail-anim inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors">
+        <Link to={route(`/solutions#${solution.id}`)} className="solution-detail-anim inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors">
           <i className="fas fa-arrow-left"></i>
-          返回核心业务
+          {text.back}
         </Link>
 
         <section className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
@@ -91,7 +117,7 @@ const SolutionDetail: React.FC = () => {
 
           <div className="lg:col-span-2 solution-detail-anim">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
-              <div className={`${color.text} text-xs font-bold tracking-widest mb-3`}>方案概览</div>
+              <div className={`${color.text} text-xs font-bold tracking-widest mb-3`}>{text.overview}</div>
               <p className="text-slate-300 leading-relaxed">{solution.overview}</p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -109,7 +135,7 @@ const SolutionDetail: React.FC = () => {
           <div className="solution-detail-anim rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-3">
               <span className={`block h-7 w-1 rounded-full ${color.bg}`}></span>
-              核心能力
+              {text.capabilities}
             </h2>
             <div className="space-y-3">
               {solution.features.map((feature) => (
@@ -124,7 +150,7 @@ const SolutionDetail: React.FC = () => {
           <div className="solution-detail-anim rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-3">
               <span className={`block h-7 w-1 rounded-full ${color.bg}`}></span>
-              应用场景
+              {text.scenarios}
             </h2>
             <ul className="space-y-3">
               {solution.scenarios.map((item) => (
@@ -139,7 +165,7 @@ const SolutionDetail: React.FC = () => {
           <div className="solution-detail-anim rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-3">
               <span className={`block h-7 w-1 rounded-full ${color.bg}`}></span>
-              业务价值
+              {text.outcomes}
             </h2>
             <ul className="space-y-3">
               {solution.outcomes.map((item) => (
@@ -154,11 +180,11 @@ const SolutionDetail: React.FC = () => {
 
         <section className="solution-detail-anim mt-12 rounded-2xl border border-white/10 bg-slate-900/70 p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
           <div>
-            <div className="text-white text-xl font-bold mb-2">需要进一步沟通该方案？</div>
-            <p className="text-slate-400 text-sm">我们可以基于现有业务流程，快速梳理可落地的试点路径。</p>
+            <div className="text-white text-xl font-bold mb-2">{text.ctaTitle}</div>
+            <p className="text-slate-400 text-sm">{text.ctaDesc}</p>
           </div>
-          <Link to="/contact" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-700 transition-colors">
-            立即咨询
+          <Link to={route('/contact')} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-700 transition-colors">
+            {text.cta}
             <i className="fas fa-arrow-right text-xs"></i>
           </Link>
         </section>

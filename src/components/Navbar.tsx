@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { stripLanguagePrefix, useLanguage } from '@/lib/i18n';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -7,7 +8,83 @@ const Navbar: React.FC = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const { isEnglish, route, switchTo } = useLanguage();
+  const isHome = stripLanguagePrefix(location.pathname) === '/';
+  const lang = isEnglish ? 'en' : 'zh';
+  const text = {
+    zh: {
+      brand: '羲梦科技',
+      home: '首页',
+      solutions: '核心业务',
+      cases: '创新案例',
+      careers: '加入我们',
+      contact: '立即咨询',
+      mobileSolutions: '核心解决方案',
+      language: 'EN',
+      mega: [
+        {
+          title: '实体产业',
+          dot: 'bg-blue-500',
+          items: [
+            { href: '/solutions#industrial', color: 'blue', title: '工业制造', desc: '产线自动化与预测维护' },
+            { href: '/solutions#education', color: 'green', title: '教育科技', desc: '知识图谱与沉浸式教学' },
+          ],
+        },
+        {
+          title: '沉浸体验',
+          dot: 'bg-cyan-500',
+          items: [
+            { href: '/solutions#culture', color: 'pink', title: '文化旅游', desc: '元宇宙景区复刻' },
+            { href: '/solutions#cloud', color: 'cyan', title: '云引擎服务', desc: '弹性算力底座' },
+          ],
+        },
+        {
+          title: '智能营销',
+          dot: 'bg-purple-500',
+          items: [
+            { href: '/solutions#marketing', color: 'purple', title: '全域 AI 营销', desc: '数据驱动精准获客' },
+            { href: '/solutions#hardware', color: 'orange', title: 'AI 硬件定制', desc: '端侧算力芯片开发' },
+          ],
+        },
+      ],
+    },
+    en: {
+      brand: 'Ximeng Tech',
+      home: 'Home',
+      solutions: 'Solutions',
+      cases: 'Cases',
+      careers: 'Careers',
+      contact: 'Contact',
+      mobileSolutions: 'Core Solutions',
+      language: '中文',
+      mega: [
+        {
+          title: 'Real Economy',
+          dot: 'bg-blue-500',
+          items: [
+            { href: '/solutions#industrial', color: 'blue', title: 'Industrial Manufacturing', desc: 'Production automation and predictive maintenance' },
+            { href: '/solutions#education', color: 'green', title: 'Education Technology', desc: 'Knowledge graphs and immersive learning' },
+          ],
+        },
+        {
+          title: 'Immersive Experience',
+          dot: 'bg-cyan-500',
+          items: [
+            { href: '/solutions#culture', color: 'pink', title: 'Cultural Tourism', desc: 'Digital venues and visitor experiences' },
+            { href: '/solutions#cloud', color: 'cyan', title: 'Cloud Engine Services', desc: 'Elastic computing foundation' },
+          ],
+        },
+        {
+          title: 'Intelligent Marketing',
+          dot: 'bg-purple-500',
+          items: [
+            { href: '/solutions#marketing', color: 'purple', title: 'Omnichannel AI Marketing', desc: 'Data-driven customer acquisition' },
+            { href: '/solutions#hardware', color: 'orange', title: 'Custom AI Hardware', desc: 'Edge AI product engineering' },
+          ],
+        },
+      ],
+    },
+  }[lang];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,17 +127,17 @@ const Navbar: React.FC = () => {
         <header className={containerClasses}>
         <div className={`px-4 md:px-8 ${useSolidStyle ? 'h-16' : 'h-20'} flex justify-between items-center transition-all duration-300`}>
             
-            <Link to="/" className="flex items-center gap-2 text-xl font-bold tracking-tighter hoverable z-50" onClick={closeMenu}>
-               <img src="/images/logo.png" alt="羲梦科技" className="h-6 w-auto" />
-               <span>羲梦科技</span>
+            <Link to={route('/')} className="flex items-center gap-2 text-xl font-bold tracking-tighter hoverable z-50" onClick={closeMenu}>
+               <img src="/images/logo.png" alt={text.brand} className="h-6 w-auto" />
+               <span>{text.brand}</span>
             </Link>
 
             <nav className="hidden md:flex items-center space-x-8">
-                <Link to="/" className={navLinkClasses}>首页<span className={underlineClasses}></span></Link>
+                <Link to={route('/')} className={navLinkClasses}>{text.home}<span className={underlineClasses}></span></Link>
                 
                 <div className="group relative h-full flex items-center">
-                    <Link to="/solutions" className={navLinkClasses + " flex items-center gap-1"}>
-                        核心业务 <i className="fas fa-chevron-down text-[10px] opacity-50 group-hover:rotate-180 transition-transform"></i>
+                    <Link to={route('/solutions')} className={navLinkClasses + " flex items-center gap-1"}>
+                        {text.solutions} <i className="fas fa-chevron-down text-[10px] opacity-50 group-hover:rotate-180 transition-transform"></i>
                         <span className={underlineClasses}></span>
                     </Link>
                     
@@ -69,53 +146,35 @@ const Navbar: React.FC = () => {
                         <div className="bg-slate-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 shadow-2xl grid grid-cols-3 gap-8 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600"></div>
                             
-                            <div className="space-y-4">
-                                <h4 className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-2 flex items-center gap-2"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> 实体产业</h4>
-                                <Link to="/solutions#industrial" className="block p-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                                    <div className="font-bold text-white group-hover/item:text-blue-400">工业制造</div>
-                                    <p className="text-xs text-gray-500 mt-1">产线自动化与预测维护</p>
-                                </Link>
-                                <Link to="/solutions#education" className="block p-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                                    <div className="font-bold text-white group-hover/item:text-green-400">教育科技</div>
-                                    <p className="text-xs text-gray-500 mt-1">知识图谱与沉浸式教学</p>
-                                </Link>
-                            </div>
-
-                            <div className="space-y-4">
-                                <h4 className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-2 flex items-center gap-2"><span className="w-1.5 h-1.5 bg-cyan-500 rounded-full"></span> 沉浸体验</h4>
-                                <Link to="/solutions#culture" className="block p-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                                    <div className="font-bold text-white group-hover/item:text-pink-400">文化旅游</div>
-                                    <p className="text-xs text-gray-500 mt-1">元宇宙景区复刻</p>
-                                </Link>
-                                <Link to="/solutions#cloud" className="block p-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                                    <div className="font-bold text-white group-hover/item:text-cyan-400">云引擎服务</div>
-                                    <p className="text-xs text-gray-500 mt-1">弹性算力底座</p>
-                                </Link>
-                            </div>
-
-                            <div className="space-y-4">
-                                 <h4 className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-2 flex items-center gap-2"><span className="w-1.5 h-1.5 bg-purple-500 rounded-full"></span> 智能营销</h4>
-                                <Link to="/solutions#marketing" className="block p-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                                    <div className="font-bold text-white group-hover/item:text-purple-400">全域 AI 营销</div>
-                                    <p className="text-xs text-gray-500 mt-1">数据驱动精准获客</p>
-                                </Link>
-                                <Link to="/solutions#hardware" className="block p-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                                    <div className="font-bold text-white group-hover/item:text-orange-400">AI 硬件定制</div>
-                                    <p className="text-xs text-gray-500 mt-1">端侧算力芯片开发</p>
-                                </Link>
-                            </div>
+                            {text.mega.map((column) => (
+                              <div key={column.title} className="space-y-4">
+                                  <h4 className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-2 flex items-center gap-2"><span className={`w-1.5 h-1.5 ${column.dot} rounded-full`}></span> {column.title}</h4>
+                                  {column.items.map((item) => (
+                                    <Link key={item.href} to={route(item.href)} className="block p-3 rounded-lg hover:bg-white/5 transition-colors group/item">
+                                        <div className={`font-bold text-white group-hover/item:text-${item.color}-400`}>{item.title}</div>
+                                        <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
+                                    </Link>
+                                  ))}
+                              </div>
+                            ))}
                         </div>
                     </div>
                 </div>
 
-                <Link to="/cases" className={navLinkClasses}>创新案例<span className={underlineClasses}></span></Link>
-                <Link to="/careers" className={navLinkClasses}>加入我们<span className={underlineClasses}></span></Link>
+                <Link to={route('/cases')} className={navLinkClasses}>{text.cases}<span className={underlineClasses}></span></Link>
+                <Link to={route('/careers')} className={navLinkClasses}>{text.careers}<span className={underlineClasses}></span></Link>
             </nav>
 
-            <div className="hidden md:block">
-               <Link to="/contact">
+            <div className="hidden md:flex items-center gap-3">
+               <Link
+                 to={switchTo(isEnglish ? 'zh' : 'en')}
+                 className="px-3 py-2 rounded-full border border-white/10 text-xs font-bold text-gray-300 hover:text-white hover:bg-white/10 transition-colors hoverable"
+               >
+                 {text.language}
+               </Link>
+               <Link to={route('/contact')}>
                     <button className={`px-6 py-2 rounded-full border transition-all duration-300 hover:scale-105 hoverable ${useSolidStyle ? 'bg-blue-600 border-blue-600 text-white hover:bg-blue-700' : 'border-blue-500/30 text-blue-400 hover:bg-blue-600 hover:text-white'}`}>
-                        立即咨询
+                        {text.contact}
                     </button>
                </Link>
             </div>
@@ -133,14 +192,21 @@ const Navbar: React.FC = () => {
              <div className="absolute top-[-10%] right-[-10%] w-64 h-64 bg-blue-900/20 blur-[80px] rounded-full"></div>
              
              <div className="space-y-6 relative z-10">
-                <Link to="/" onClick={closeMenu} className="block text-3xl font-bold hover:text-blue-500 transition-colors">首页</Link>
-                <Link to="/solutions" onClick={closeMenu} className="block text-3xl font-bold hover:text-blue-500 transition-colors">核心解决方案</Link>
-                <Link to="/cases" onClick={closeMenu} className="block text-3xl font-bold hover:text-blue-500 transition-colors">创新案例</Link>
-                <Link to="/careers" onClick={closeMenu} className="block text-3xl font-bold hover:text-blue-500 transition-colors">加入我们</Link>
+                <Link to={route('/')} onClick={closeMenu} className="block text-3xl font-bold hover:text-blue-500 transition-colors">{text.home}</Link>
+                <Link to={route('/solutions')} onClick={closeMenu} className="block text-3xl font-bold hover:text-blue-500 transition-colors">{text.mobileSolutions}</Link>
+                <Link to={route('/cases')} onClick={closeMenu} className="block text-3xl font-bold hover:text-blue-500 transition-colors">{text.cases}</Link>
+                <Link to={route('/careers')} onClick={closeMenu} className="block text-3xl font-bold hover:text-blue-500 transition-colors">{text.careers}</Link>
                 
                 <div className="pt-8 border-t border-white/10">
-                    <Link to="/contact" onClick={closeMenu}>
-                        <button className="w-full py-4 rounded-full bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition-all">立即咨询</button>
+                    <Link to={route('/contact')} onClick={closeMenu}>
+                        <button className="w-full py-4 rounded-full bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition-all">{text.contact}</button>
+                    </Link>
+                    <Link
+                      to={switchTo(isEnglish ? 'zh' : 'en')}
+                      onClick={closeMenu}
+                      className="mt-4 block w-full text-center py-3 rounded-full border border-white/10 text-gray-300 font-bold hover:bg-white/10 transition-colors"
+                    >
+                      {text.language}
                     </Link>
                 </div>
              </div>

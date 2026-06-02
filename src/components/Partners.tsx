@@ -1,26 +1,28 @@
 
 import React, { useRef, useEffect, useMemo } from 'react';
 import TiltCard from './TiltCard';
+import { useLanguage } from '@/lib/i18n';
 
 const Partners: React.FC = () => {
+  const { isEnglish } = useLanguage();
   const logosRow1 = [
-    { name: '字节跳动', src: '/images/partners/bytedance.png' },
+    { name: isEnglish ? 'ByteDance' : '字节跳动', src: '/images/partners/bytedance.png' },
     { name: 'AWS', src: '/images/partners/aws.png' },
     { name: 'Azure', src: '/images/partners/azure.png' },
-    { name: '华为云', src: '/images/partners/huawei.png' },
-    { name: '百度云', src: '/images/partners/4.png' },
-    { name: '清华大学', src: '/images/partners/5.png' },
-    { name: '中国电信', src: '/images/partners/9.png' },
+    { name: isEnglish ? 'Huawei Cloud' : '华为云', src: '/images/partners/huawei.png' },
+    { name: isEnglish ? 'Baidu Cloud' : '百度云', src: '/images/partners/4.png' },
+    { name: isEnglish ? 'Tsinghua University' : '清华大学', src: '/images/partners/5.png' },
+    { name: isEnglish ? 'China Telecom' : '中国电信', src: '/images/partners/9.png' },
   ];
 
   const logosRow2 = [
-    { name: '上海交通大学', src: '/images/partners/6.png' },
-    { name: '中国科学院', src: '/images/partners/7.png' },
-    { name: '中国建筑', src: '/images/partners/12.png' },
-    { name: '阿里云', src: '/images/partners/11.png' },
-    { name: '腾讯云', src: '/images/partners/tencent.png' },
-    { name: '科大讯飞', src: '/images/partners/2.png' },
-    { name: '华中科技大学', src: '/images/partners/14.png' },
+    { name: isEnglish ? 'Shanghai Jiao Tong University' : '上海交通大学', src: '/images/partners/6.png' },
+    { name: isEnglish ? 'Chinese Academy of Sciences' : '中国科学院', src: '/images/partners/7.png' },
+    { name: isEnglish ? 'China State Construction' : '中国建筑', src: '/images/partners/12.png' },
+    { name: isEnglish ? 'Alibaba Cloud' : '阿里云', src: '/images/partners/11.png' },
+    { name: isEnglish ? 'Tencent Cloud' : '腾讯云', src: '/images/partners/tencent.png' },
+    { name: isEnglish ? 'iFlytek' : '科大讯飞', src: '/images/partners/2.png' },
+    { name: isEnglish ? 'Huazhong University of Science and Technology' : '华中科技大学', src: '/images/partners/14.png' },
   ];
 
   const rowRef1 = useRef<HTMLDivElement>(null);
@@ -41,10 +43,10 @@ const Partners: React.FC = () => {
        
        <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-             <h2 className="text-3xl md:text-4xl font-bold mb-4">合作案例</h2>
+             <h2 className="text-3xl md:text-4xl font-bold mb-4">{isEnglish ? 'Partners and Cases' : '合作案例'}</h2>
              <div className="flex items-center justify-center gap-4 text-gray-400 text-sm md:text-lg">
                 <span className="h-px w-8 bg-blue-500/50"></span>
-                <span>共筑智慧新生态 共迎未来新机遇</span>
+                <span>{isEnglish ? 'Building smarter ecosystems and future-ready opportunities together' : '共筑智慧新生态 共迎未来新机遇'}</span>
                 <span className="h-px w-8 bg-blue-500/50"></span>
              </div>
           </div>

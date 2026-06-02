@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  SITE,
   absoluteUrl,
   buildKeywords,
   buildPageTitle,
@@ -62,9 +61,9 @@ const setLink = (rel: string, href: string, attributes?: Record<string, string>)
 
 const Seo = ({
   title,
-  description = SITE.defaultDescription,
+  description,
   path,
-  image = SITE.ogImage,
+  image,
   type = 'website',
   keywords,
   noindex = false,
@@ -83,7 +82,7 @@ const Seo = ({
     const nextTitle = buildPageTitle(title, language);
     const nextDescription = normalizeText(description || site.defaultDescription);
     const canonicalUrl = absoluteUrl(localizedPath);
-    const imageUrl = absoluteUrl(image);
+    const imageUrl = absoluteUrl(image || site.ogImage);
     const robots = noindex ? 'noindex, follow' : 'index, follow';
 
     document.title = nextTitle;

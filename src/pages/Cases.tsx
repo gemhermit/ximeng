@@ -3,27 +3,55 @@ import React, { useLayoutEffect, useRef, useMemo, useState, useEffect } from 're
 import { useLocation, Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
 import Seo from '@/components/Seo';
-import { CASE_CATEGORIES, casesData, getCategoryImage, CaseItem } from '@/data/cases';
+import { getCaseCategories, getCasesData, getCategoryImage, CaseItem } from '@/data/cases';
 import { buildBreadcrumbSchema, buildItemListSchema } from '@/lib/seo';
+import { useLanguage } from '@/lib/i18n';
 import gsap from 'gsap';
-
-const casesFlat: CaseItem[] = casesData;
 
 const Cases: React.FC = () => {
     const containerRef = useRef(null);
-    const [activeCat, setActiveCat] = useState<string>('全部');
+    const { isEnglish, language, route } = useLanguage();
+    const allLabel = isEnglish ? 'All' : '全部';
+    const [activeCat, setActiveCat] = useState<string>(allLabel);
     const location = useLocation();
+    const casesFlat: CaseItem[] = useMemo(() => getCasesData(language), [language]);
+    const caseCategories = useMemo(() => getCaseCategories(language), [language]);
+    const text = isEnglish ? {
+        title: 'Innovation Cases',
+        seoTitle: 'Innovation Cases',
+        subtitle: 'Professional Case Library',
+        description: 'Explore Ximeng Tech AI solution cases across industrial manufacturing, education platforms, AI cultural tourism, cloud engine services, omnichannel AI marketing, and custom AI hardware.',
+        home: 'Home',
+        cases: 'Innovation Cases',
+        listName: 'Ximeng Tech Innovation Cases',
+        detail: 'View Details',
+        external: 'External Link',
+    } : {
+        title: '案例展示平台',
+        seoTitle: '创新案例',
+        subtitle: '专业案例库',
+        description: '查看羲梦科技在工业制造、教育平台、AI 文旅、云引擎服务、全域 AI 营销和 AI 硬件定制方向的 AI 解决方案案例。',
+        home: '首页',
+        cases: '创新案例',
+        listName: '羲梦科技创新案例',
+        detail: '查看详情',
+        external: '外部链接',
+    };
 
     const cats = useMemo(() => {
-        const set = new Set<string>(['全部']);
-        CASE_CATEGORIES.forEach(c => set.add(c));
+        const set = new Set<string>([allLabel]);
+        caseCategories.forEach(c => set.add(c));
         return Array.from(set);
-    }, []);
+    }, [allLabel, caseCategories]);
 
     const filtered = useMemo(() => {
-        if (activeCat === '全部') return casesFlat;
+        if (activeCat === allLabel) return casesFlat;
         return casesFlat.filter(c => c.category === activeCat);
-    }, [activeCat]);
+    }, [activeCat, allLabel, casesFlat]);
+
+    useEffect(() => {
+        setActiveCat(allLabel);
+    }, [allLabel]);
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
@@ -51,7 +79,7 @@ const Cases: React.FC = () => {
     const CaseCard = ({ item }: { key?: React.Key; item: CaseItem }) => (
         <div className="case-card group h-full">
             <Link
-                to={`/cases/${item.slug}`}
+                to={route(`/cases/${item.slug}`)}
                 className="block relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-slate-900 transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1"
             >
                 <div className="flex flex-col h-full">
@@ -78,7 +106,7 @@ const Cases: React.FC = () => {
 
                         <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
                             <span className="inline-flex items-center gap-2 text-sm text-white font-medium group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-300">
-                                查看详情
+                                {text.detail}
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
@@ -92,7 +120,7 @@ const Cases: React.FC = () => {
                                     onClick={e => e.stopPropagation()}
                                     className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
                                 >
-                                    外部链接 ↗
+                                    {text.external} ↗
                                 </a>
                             )}
                         </div>
@@ -105,26 +133,26 @@ const Cases: React.FC = () => {
     return (
         <div ref={containerRef} className="min-h-screen bg-slate-950">
             <Seo
-                title="创新案例"
-                description="查看羲梦科技在工业制造、教育平台、AI 文旅、云引擎服务、全域 AI 营销和 AI 硬件定制方向的 AI 解决方案案例。"
+                title={text.seoTitle}
+                description={text.description}
                 path="/cases"
                 image="/images/case-data.jpg"
-                keywords={[...CASE_CATEGORIES, 'AI 案例', '智能体案例', '企业数字化案例']}
+                keywords={isEnglish ? [...caseCategories, 'AI cases', 'agent cases', 'enterprise digital transformation cases'] : [...caseCategories, 'AI 案例', '智能体案例', '企业数字化案例']}
                 structuredData={[
                     buildBreadcrumbSchema([
-                        { name: '首页', path: '/' },
-                        { name: '创新案例', path: '/cases' },
+                        { name: text.home, path: route('/') },
+                        { name: text.cases, path: route('/cases') },
                     ]),
                     buildItemListSchema(
-                        casesData.map((item) => ({
+                        casesFlat.map((item) => ({
                             name: item.title,
-                            path: `/cases/${item.slug}`,
+                            path: route(`/cases/${item.slug}`),
                         })),
-                        '羲梦科技创新案例',
+                        text.listName,
                     ),
                 ]}
             />
-            <PageHeader title="案例展示平台" subtitle="专业案例库" gradient="from-purple-400 via-pink-400 to-red-400" />
+            <PageHeader title={text.title} subtitle={text.subtitle} gradient="from-purple-400 via-pink-400 to-red-400" />
             <div className="container mx-auto px-4 sm:px-6 py-12">
                 {/* Filter Buttons */}
                 <div className="flex flex-wrap gap-3 mb-10 justify-center md:justify-start">
@@ -139,9 +167,9 @@ const Cases: React.FC = () => {
                     ))}
                 </div>
 
-                {activeCat === '全部' ? (
+                {activeCat === allLabel ? (
                   <div className="space-y-12 md:space-y-16">
-                    {CASE_CATEGORIES.map((cat, ci) => {
+                    {caseCategories.map((cat, ci) => {
                       const list = casesFlat.filter(c => c.category === cat);
                       if (list.length === 0) return null;
                       
