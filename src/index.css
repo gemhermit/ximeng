@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Other global styles from index.html can be moved here if needed, 
+   but they were inline in index.html, so I'll leave them there for now 
+   unless I want to fully clean up index.html. 
+   The inline styles in index.html (fonts, body bg) are fine for now. */
