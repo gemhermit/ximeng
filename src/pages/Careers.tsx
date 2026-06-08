@@ -123,7 +123,7 @@ const Careers: React.FC = () => {
     }, []);
 
     return (
-        <div ref={containerRef} className="min-h-screen bg-slate-950">
+        <div ref={containerRef} className="bg-slate-950">
             <Seo
                 title={content.title}
                 description={content.description}
@@ -145,7 +145,7 @@ const Careers: React.FC = () => {
             />
             <PageHeader title={content.headerTitle} subtitle={content.subtitle} gradient="from-green-400 via-emerald-400 to-teal-400" />
             
-            <div className="container mx-auto px-6 py-20">
+            <div className="container mx-auto px-6 pt-20 pb-6">
                 <div className="vision-wrapper mb-16 max-w-6xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
@@ -218,8 +218,6 @@ const Careers: React.FC = () => {
                     </div>
                 </div>
             </div>
-            
-             <div className="h-20"></div>
         </div>
     );
 };

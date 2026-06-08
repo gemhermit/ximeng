@@ -73,17 +73,17 @@ const Values: React.FC = () => {
                 
                 <div className="col-span-1 sm:col-span-2 glass-panel border border-white/10 bg-white/5 p-8 rounded-xl mt-4 flex justify-between items-center text-center">
                     <div>
-                        <div className="text-3xl font-bold font-mono counter" data-target="100">0</div>
+                        <div className="text-3xl font-bold font-mono counter" data-target="128">0</div>
                         <div className="text-xs text-gray-500 mt-1">{text.stats[0]}</div>
                     </div>
                     <div className="w-px h-12 bg-white/10"></div>
                     <div>
-                        <div className="text-3xl font-bold font-mono counter" data-target="15">0</div>
+                        <div className="text-3xl font-bold font-mono counter" data-target="23">0</div>
                         <div className="text-xs text-gray-500 mt-1">{text.stats[1]}</div>
                     </div>
                     <div className="w-px h-12 bg-white/10"></div>
                     <div>
-                        <div className="text-3xl font-bold font-mono">500</div>
+                        <div className="text-3xl font-bold font-mono counter" data-target="537">0</div>
                         <div className="text-xs text-gray-500 mt-1">{text.stats[2]}</div>
                     </div>
                 </div>
