@@ -7,6 +7,30 @@ import { buildBreadcrumbSchema } from '@/lib/seo';
 import { useLanguage } from '@/lib/i18n';
 import gsap from 'gsap';
 
+const jobColorClasses = {
+    blue: {
+        text: 'text-blue-400',
+        textStrong: 'text-blue-500',
+        bg: 'bg-blue-500',
+        button: 'bg-blue-600 hover:bg-blue-700',
+        shadow: 'shadow-blue-900/20',
+    },
+    purple: {
+        text: 'text-purple-400',
+        textStrong: 'text-purple-500',
+        bg: 'bg-purple-500',
+        button: 'bg-purple-600 hover:bg-purple-700',
+        shadow: 'shadow-purple-900/20',
+    },
+    green: {
+        text: 'text-green-400',
+        textStrong: 'text-green-500',
+        bg: 'bg-green-500',
+        button: 'bg-green-600 hover:bg-green-700',
+        shadow: 'shadow-green-900/20',
+    },
+};
+
 const JobDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const containerRef = useRef(null);
@@ -79,6 +103,8 @@ const JobDetail: React.FC = () => {
         ? `Application for ${job.title} - ${job.dept}`
         : `应聘${job.title}-${job.dept}`;
 
+    const color = jobColorClasses[job.color];
+
     return (
         <div ref={containerRef} className="min-h-screen bg-slate-950">
             <Seo
@@ -118,7 +144,7 @@ const JobDetail: React.FC = () => {
                                 </div>
                                 <div>
                                     <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.salary}</div>
-                                    <div className={`font-bold text-${job.color}-400`}>{job.salary}</div>
+                                    <div className={`font-bold ${color.text}`}>{job.salary}</div>
                                 </div>
                                 <div>
                                     <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.type}</div>
@@ -129,13 +155,13 @@ const JobDetail: React.FC = () => {
 
                         <div className="anim-up">
                             <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                                <span className={`w-2 h-8 rounded bg-${job.color}-500 block`}></span>
+                                <span className={`w-2 h-8 rounded ${color.bg} block`}></span>
                                 {text.responsibilities}
                             </h3>
                             <ul className="space-y-4">
                                 {job.desc.map((item, i) => (
                                     <li key={i} className="flex gap-4 text-gray-300 leading-relaxed">
-                                        <i className={`fas fa-check-circle text-${job.color}-500 mt-1 shrink-0`}></i>
+                                        <i className={`fas fa-check-circle ${color.textStrong} mt-1 shrink-0`}></i>
                                         <span>{item}</span>
                                     </li>
                                 ))}
@@ -144,7 +170,7 @@ const JobDetail: React.FC = () => {
 
                         <div className="anim-up">
                             <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                                <span className={`w-2 h-8 rounded bg-${job.color}-500 block`}></span>
+                                <span className={`w-2 h-8 rounded ${color.bg} block`}></span>
                                 {text.requirements}
                             </h3>
                             <ul className="space-y-4">
@@ -164,7 +190,7 @@ const JobDetail: React.FC = () => {
                             </p>
                             <a 
                                 href={`mailto:echo@ximengtech.cn?subject=${encodeURIComponent(mailSubject)}`} 
-                                className={`inline-flex items-center gap-2 px-8 py-4 bg-${job.color}-600 hover:bg-${job.color}-700 text-white font-bold rounded-lg transition-all hoverable shadow-lg shadow-${job.color}-900/20`}
+                                className={`inline-flex items-center gap-2 px-8 py-4 ${color.button} text-white font-bold rounded-lg transition-all hoverable shadow-lg ${color.shadow}`}
                             >
                                 <i className="fas fa-paper-plane"></i> {text.applyNow}
                             </a>
@@ -187,7 +213,7 @@ const JobDetail: React.FC = () => {
                                     </div>
                                     <div>
                                         <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.salary}</div>
-                                        <div className={`font-bold text-${job.color}-400 text-2xl font-mono`}>{job.salary}</div>
+                                        <div className={`font-bold ${color.text} text-2xl font-mono`}>{job.salary}</div>
                                     </div>
                                     <div>
                                         <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">{text.type}</div>
@@ -197,7 +223,7 @@ const JobDetail: React.FC = () => {
                                 <div className="mt-8 pt-6 border-t border-white/10">
                                     <a 
                                         href={`mailto:echo@ximengtech.cn?subject=${encodeURIComponent(mailSubject)}`} 
-                                        className={`block w-full text-center py-3 bg-${job.color}-600 hover:bg-${job.color}-700 text-white font-bold rounded transition-all hoverable`}
+                                        className={`block w-full text-center py-3 ${color.button} text-white font-bold rounded transition-all hoverable`}
                                     >
                                         {text.submit}
                                     </a>

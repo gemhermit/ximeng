@@ -6,11 +6,13 @@ export interface JobItem {
     dept: string;
     loc: string;
     salary: string;
-    color: string;
+    color: JobColor;
     type: string;
     desc: string[];
     reqs: string[];
 }
+
+export type JobColor = 'blue' | 'purple' | 'green';
 
 export const jobsData: JobItem[] = [
     { 
