@@ -69,7 +69,7 @@ const Hero: React.FC = () => {
           
 
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tighter mix-blend-lighten">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tighter">
             <div className="overflow-hidden"><span className="block reveal-heading text-white">{text.headlineTop}</span></div>
             <div className="overflow-hidden">
                 <span className="block reveal-heading bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 text-transparent bg-clip-text filter drop-shadow-[0_0_30px_#3b82f680]">

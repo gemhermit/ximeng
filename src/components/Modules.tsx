@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TiltCard from './TiltCard';
-import { getSolutionsData } from '@/data/solutions';
+import { getSolutionsData, solutionColorClasses } from '@/data/solutions';
 import { useLanguage } from '@/lib/i18n';
 
 const Modules: React.FC = () => {
@@ -30,24 +30,26 @@ const Modules: React.FC = () => {
         
         {/* Adjusted Grid: grid-cols-1 on mobile (important fix), grid-cols-2 on tablet, grid-cols-3 on desktop */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {modules.map((mod) => (
+          {modules.slice(0, 6).map((mod) => {
+            const color = solutionColorClasses[mod.color];
+            return (
             <TiltCard key={mod.id} className="h-auto min-h-[380px] md:h-[420px]">
-              <div className={`relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm`}>
+              <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm">
                 {/* Gradient Hover Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-${mod.color}-900 via-${mod.color}-800 to-${mod.color}-600 opacity-0 group-hover:opacity-90 transition-opacity duration-500 ease-out z-0`}></div>
-                
+                <div className={`absolute inset-0 bg-gradient-to-br ${color.gradientDeep} opacity-0 group-hover:opacity-90 transition-opacity duration-500 ease-out z-0`}></div>
+
                 <div className="relative z-10 p-6 md:p-8 h-full flex flex-col transition-transform duration-500 group-hover:-translate-y-2">
                   <div className="mb-6">
-                    <div className={`w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center text-${mod.color}-400 group-hover:bg-white group-hover:text-${mod.color}-600 transition-colors shadow-lg`}>
+                    <div className={`w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center ${color.text} group-hover:bg-white ${color.iconHoverText} transition-colors shadow-lg`}>
                       <i className={`fas ${mod.icon} text-2xl`}></i>
                     </div>
                   </div>
-                  
+
                   <h3 className="text-2xl font-bold mb-3 text-white">{mod.title}</h3>
-                  <p className={`text-gray-400 text-sm group-hover:text-${mod.color}-100 transition-colors mb-4`}>{mod.desc}</p>
-                  
+                  <p className={`text-gray-400 text-sm ${color.descHoverText} transition-colors mb-4`}>{mod.desc}</p>
+
                   <div className="mt-auto pt-4 border-t border-white/10 group-hover:border-white/20">
-                    <p className={`text-sm text-${mod.color}-50/80 leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute bottom-12 left-6 right-6 md:static md:opacity-100 md:block hidden md:group-hover:text-white`}>
+                    <p className={`text-sm ${color.overviewText} leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute bottom-12 left-6 right-6 md:static md:opacity-100 md:block hidden md:group-hover:text-white`}>
                         {mod.overview}
                     </p>
                     {/* Mobile Only Summary (always visible) */}
@@ -65,7 +67,8 @@ const Modules: React.FC = () => {
                 </div>
               </div>
             </TiltCard>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

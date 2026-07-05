@@ -1,6 +1,6 @@
 import type { Language } from '@/lib/i18n';
 
-export type SolutionColor = 'blue' | 'green' | 'pink' | 'cyan' | 'purple' | 'orange';
+export type SolutionColor = 'blue' | 'green' | 'pink' | 'cyan' | 'purple' | 'orange' | 'fuchsia';
 
 export interface SolutionItem {
   id: string;
@@ -15,6 +15,9 @@ export interface SolutionItem {
   overview: string;
   scenarios: string[];
   outcomes: string[];
+  /** Optional external link, e.g. AI Music studio URL. When present, the
+   *  solution detail page renders a primary "Try it now" button pointing to it. */
+  link?: string;
 }
 
 export const solutionColorClasses: Record<SolutionColor, {
@@ -25,6 +28,12 @@ export const solutionColorClasses: Record<SolutionColor, {
   gradient: string;
   iconBg: string;
   shadow: string;
+  // Static classes used by Modules cards (previously dynamic `from-${color}-900` etc.
+  // which Tailwind JIT could not detect and silently dropped).
+  gradientDeep: string;
+  iconHoverText: string;
+  descHoverText: string;
+  overviewText: string;
 }> = {
   blue: {
     text: 'text-blue-400',
@@ -34,6 +43,10 @@ export const solutionColorClasses: Record<SolutionColor, {
     gradient: 'from-blue-500 via-cyan-400 to-blue-700',
     iconBg: 'bg-blue-500/20',
     shadow: 'shadow-blue-500/10',
+    gradientDeep: 'from-blue-900 via-blue-800 to-blue-600',
+    iconHoverText: 'group-hover:text-blue-600',
+    descHoverText: 'group-hover:text-blue-100',
+    overviewText: 'text-blue-50/80',
   },
   green: {
     text: 'text-green-400',
@@ -43,6 +56,10 @@ export const solutionColorClasses: Record<SolutionColor, {
     gradient: 'from-green-500 via-emerald-400 to-teal-700',
     iconBg: 'bg-green-500/20',
     shadow: 'shadow-green-500/10',
+    gradientDeep: 'from-green-900 via-green-800 to-green-600',
+    iconHoverText: 'group-hover:text-green-600',
+    descHoverText: 'group-hover:text-green-100',
+    overviewText: 'text-green-50/80',
   },
   pink: {
     text: 'text-pink-400',
@@ -52,6 +69,10 @@ export const solutionColorClasses: Record<SolutionColor, {
     gradient: 'from-pink-500 via-rose-400 to-purple-700',
     iconBg: 'bg-pink-500/20',
     shadow: 'shadow-pink-500/10',
+    gradientDeep: 'from-pink-900 via-pink-800 to-pink-600',
+    iconHoverText: 'group-hover:text-pink-600',
+    descHoverText: 'group-hover:text-pink-100',
+    overviewText: 'text-pink-50/80',
   },
   cyan: {
     text: 'text-cyan-400',
@@ -61,6 +82,10 @@ export const solutionColorClasses: Record<SolutionColor, {
     gradient: 'from-cyan-500 via-sky-400 to-blue-700',
     iconBg: 'bg-cyan-500/20',
     shadow: 'shadow-cyan-500/10',
+    gradientDeep: 'from-cyan-900 via-cyan-800 to-cyan-600',
+    iconHoverText: 'group-hover:text-cyan-600',
+    descHoverText: 'group-hover:text-cyan-100',
+    overviewText: 'text-cyan-50/80',
   },
   purple: {
     text: 'text-purple-400',
@@ -70,6 +95,10 @@ export const solutionColorClasses: Record<SolutionColor, {
     gradient: 'from-purple-500 via-fuchsia-400 to-indigo-700',
     iconBg: 'bg-purple-500/20',
     shadow: 'shadow-purple-500/10',
+    gradientDeep: 'from-purple-900 via-purple-800 to-purple-600',
+    iconHoverText: 'group-hover:text-purple-600',
+    descHoverText: 'group-hover:text-purple-100',
+    overviewText: 'text-purple-50/80',
   },
   orange: {
     text: 'text-orange-400',
@@ -79,6 +108,23 @@ export const solutionColorClasses: Record<SolutionColor, {
     gradient: 'from-orange-500 via-amber-400 to-red-700',
     iconBg: 'bg-orange-500/20',
     shadow: 'shadow-orange-500/10',
+    gradientDeep: 'from-orange-900 via-orange-800 to-orange-600',
+    iconHoverText: 'group-hover:text-orange-600',
+    descHoverText: 'group-hover:text-orange-100',
+    overviewText: 'text-orange-50/80',
+  },
+  fuchsia: {
+    text: 'text-fuchsia-400',
+    bg: 'bg-fuchsia-500',
+    bgSoft: 'bg-fuchsia-500/10',
+    border: 'border-fuchsia-500/30',
+    gradient: 'from-fuchsia-500 via-pink-400 to-purple-700',
+    iconBg: 'bg-fuchsia-500/20',
+    shadow: 'shadow-fuchsia-500/10',
+    gradientDeep: 'from-fuchsia-900 via-fuchsia-800 to-fuchsia-600',
+    iconHoverText: 'group-hover:text-fuchsia-600',
+    descHoverText: 'group-hover:text-fuchsia-100',
+    overviewText: 'text-fuchsia-50/80',
   },
 };
 
@@ -167,6 +213,21 @@ export const solutionsData: SolutionItem[] = [
     scenarios: ['AI 鼠标、学习机、陪伴设备等产品定制', '边缘计算板卡和传感器方案选型', '语音、视觉和交互算法端侧适配', '开发套件、样机验证和小批量落地'],
     outcomes: ['缩短硬件验证周期', '降低端侧 AI 落地门槛', '支持差异化产品形态', '提升软硬件协同稳定性'],
   },
+  {
+    id: 'music',
+    title: 'AI 情绪音乐',
+    subtitle: 'AI 音乐',
+    desc: '把你的故事谱成歌。AI 聆听你的情绪，用最贴合心境的旋律为你谱曲演唱。',
+    features: ['AI 谱曲', '五语演唱', '声音选择', '记忆留存'],
+    icon: 'fa-music',
+    color: 'fuchsia',
+    image: '/images/ai-generated/ai-music.jpg',
+    metrics: ['情绪驱动', '五语演唱', '一键留存'],
+    overview: '面向个人情感表达与内容创作场景，基于 AI 谱曲与多语言演唱能力，将文字故事转化为可聆听的歌曲，适配情感记录、内容营销、文旅纪念等多种用途。',
+    scenarios: ['把心情日记或故事变成一首歌', '中英日韩粤五语演唱自由切换', '声音风格与人声质感选择', '作品云端留存与分享'],
+    outcomes: ['降低音乐创作门槛', '让情绪获得可聆听的表达', '丰富内容创作的声音形态', '形成可分享的情感记忆资产'],
+    link: 'https://xinshibandao.coze.site/studio',
+  },
 ];
 
 export const solutionsDataEn: SolutionItem[] = [
@@ -253,6 +314,21 @@ export const solutionsDataEn: SolutionItem[] = [
     overview: 'For edge intelligence, interaction devices, and vertical hardware scenarios, we provide custom services from form planning, board selection, and algorithm adaptation to firmware integration and pilot production.',
     scenarios: ['Custom AI mice, learning devices, companion devices, and similar products', 'Edge-computing board and sensor-solution selection', 'On-device adaptation for voice, vision, and interaction algorithms', 'Development kits, prototype validation, and small-batch rollout'],
     outcomes: ['Shorten hardware validation cycles', 'Lower the barrier to edge AI deployment', 'Support differentiated product forms', 'Improve software-hardware integration stability'],
+  },
+  {
+    id: 'music',
+    title: 'AI Emotion Music',
+    subtitle: 'AI Music',
+    desc: 'Turn your story into a song. AI listens to your emotion and composes a melody that fits your mood, then sings it for you.',
+    features: ['AI Composition', '5-Language Vocals', 'Voice Selection', 'Memory Keepsake'],
+    icon: 'fa-music',
+    color: 'fuchsia',
+    image: '/images/ai-generated/ai-music.jpg',
+    metrics: ['Emotion-Driven', '5-Language Vocals', 'One-Tap Save'],
+    overview: 'For personal expression and content creation, our AI composition and multilingual vocal capabilities turn written stories into listenable songs — fitting emotional keepsakes, content marketing, and tourism souvenirs.',
+    scenarios: ['Turn a diary entry or story into a song', 'Switch freely across Mandarin, English, Japanese, Korean, and Cantonese vocals', 'Choose voice style and vocal texture', 'Save and share works in the cloud'],
+    outcomes: ['Lower the barrier to music creation', 'Give emotions a listenable form', 'Enrich content with new sound formats', 'Build shareable emotional memory assets'],
+    link: 'https://xinshibandao.coze.site/studio',
   },
 ];
 

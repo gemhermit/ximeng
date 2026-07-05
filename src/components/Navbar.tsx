@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { stripLanguagePrefix, useLanguage } from '@/lib/i18n';
 
+// Static class map — Tailwind JIT cannot detect `group-hover/item:text-${color}-400`
+// style dynamic class names, so we list the full strings here.
+const megaColorMap: Record<string, string> = {
+  blue: 'group-hover/item:text-blue-400',
+  green: 'group-hover/item:text-green-400',
+  pink: 'group-hover/item:text-pink-400',
+  cyan: 'group-hover/item:text-cyan-400',
+  purple: 'group-hover/item:text-purple-400',
+  orange: 'group-hover/item:text-orange-400',
+  fuchsia: 'group-hover/item:text-fuchsia-400',
+};
+
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -46,6 +58,13 @@ const Navbar: React.FC = () => {
             { href: '/solutions#hardware', color: 'orange', title: 'AI 硬件定制', desc: '端侧算力芯片开发' },
           ],
         },
+        {
+          title: 'AI 创作',
+          dot: 'bg-fuchsia-500',
+          items: [
+            { href: '/solutions#music', color: 'fuchsia', title: 'AI 情绪音乐', desc: 'AI 谱曲与五语演唱' },
+          ],
+        },
       ],
     },
     en: {
@@ -80,6 +99,13 @@ const Navbar: React.FC = () => {
           items: [
             { href: '/solutions#marketing', color: 'purple', title: 'Omnichannel AI Marketing', desc: 'Data-driven customer acquisition' },
             { href: '/solutions#hardware', color: 'orange', title: 'Custom AI Hardware', desc: 'Edge AI product engineering' },
+          ],
+        },
+        {
+          title: 'AI Creation',
+          dot: 'bg-fuchsia-500',
+          items: [
+            { href: '/solutions#music', color: 'fuchsia', title: 'AI Emotion Music', desc: 'AI composition and multilingual vocals' },
           ],
         },
       ],
@@ -143,15 +169,15 @@ const Navbar: React.FC = () => {
                     
                     {/* Mega Menu */}
                     <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 w-[90vw] max-w-5xl pointer-events-none group-hover:pointer-events-auto">
-                        <div className="bg-slate-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 shadow-2xl grid grid-cols-3 gap-8 relative overflow-hidden">
+                        <div className="bg-slate-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600"></div>
-                            
+
                             {text.mega.map((column) => (
                               <div key={column.title} className="space-y-4">
                                   <h4 className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-2 flex items-center gap-2"><span className={`w-1.5 h-1.5 ${column.dot} rounded-full`}></span> {column.title}</h4>
                                   {column.items.map((item) => (
                                     <Link key={item.href} to={route(item.href)} className="block p-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                                        <div className={`font-bold text-white group-hover/item:text-${item.color}-400`}>{item.title}</div>
+                                        <div className={`font-bold text-white ${megaColorMap[item.color] ?? megaColorMap.blue}`}>{item.title}</div>
                                         <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
                                     </Link>
                                   ))}

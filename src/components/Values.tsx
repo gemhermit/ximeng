@@ -6,6 +6,14 @@ import { useLanguage } from '@/lib/i18n';
 
 const Values: React.FC = () => {
   const { isEnglish } = useLanguage();
+  // Static class map — Tailwind JIT cannot detect `from-${bg}-600` style dynamic
+  // class names, so we list the full strings here to make hover styles actually apply.
+  const valuesColorMap: Record<string, { gradient: string; text: string }> = {
+    yellow: { gradient: 'from-amber-600 via-amber-700 to-amber-800', text: 'text-yellow-400' },
+    blue: { gradient: 'from-blue-600 via-blue-700 to-blue-800', text: 'text-blue-400' },
+    green: { gradient: 'from-emerald-600 via-emerald-700 to-emerald-800', text: 'text-green-400' },
+    red: { gradient: 'from-rose-600 via-rose-700 to-rose-800', text: 'text-red-400' },
+  };
   const text = isEnglish ? {
     headingTop: 'Empower',
     headingAccent: 'Everything',
@@ -58,18 +66,21 @@ const Values: React.FC = () => {
              </div>
              
              <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {text.values.map((item, idx) => (
+                {text.values.map((item, idx) => {
+                   const vc = valuesColorMap[item.color] ?? valuesColorMap.blue;
+                   return (
                    <TiltCard key={idx} className="h-[250px]">
                       <div className="relative h-full w-full rounded-xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm">
-                         <div className={`absolute inset-0 bg-gradient-to-br from-${item.bg}-600 via-${item.bg}-700 to-${item.bg}-800 opacity-0 group-hover:opacity-90 transition-opacity duration-500 ease-out z-0`}></div>
+                         <div className={`absolute inset-0 bg-gradient-to-br ${vc.gradient} opacity-0 group-hover:opacity-90 transition-opacity duration-500 ease-out z-0`}></div>
                          <div className="relative z-10 p-8 h-full flex flex-col justify-center transition-transform duration-500 group-hover:-translate-y-2">
-                            <i className={`fas ${item.icon} text-4xl text-${item.color}-400 mb-6 group-hover:text-white transition-colors`}></i>
+                            <i className={`fas ${item.icon} text-4xl ${vc.text} mb-6 group-hover:text-white transition-colors`}></i>
                             <h4 className="text-xl font-bold mb-3 text-white">{item.title}</h4>
                             <p className="text-sm text-gray-500 group-hover:text-white/80 transition-colors">{item.desc}</p>
                          </div>
                       </div>
                    </TiltCard>
-                ))}
+                   );
+                })}
                 
                 <div className="col-span-1 sm:col-span-2 glass-panel border border-white/10 bg-white/5 p-8 rounded-xl mt-4 flex justify-between items-center text-center">
                     <div>

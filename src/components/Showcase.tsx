@@ -59,6 +59,17 @@ const Showcase: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { isEnglish, route } = useLanguage();
+  // Static class map — Tailwind JIT cannot detect `border-${color}-500` style
+  // dynamic class names, so we list the full strings here.
+  const slidesColorMap: Record<string, { border: string; text: string; hoverBg: string }> = {
+    blue: { border: 'border-blue-500', text: 'text-blue-400', hoverBg: 'hover:bg-blue-600' },
+    green: { border: 'border-green-500', text: 'text-green-400', hoverBg: 'hover:bg-green-600' },
+    pink: { border: 'border-pink-500', text: 'text-pink-400', hoverBg: 'hover:bg-pink-600' },
+    cyan: { border: 'border-cyan-500', text: 'text-cyan-400', hoverBg: 'hover:bg-cyan-600' },
+    purple: { border: 'border-purple-500', text: 'text-purple-400', hoverBg: 'hover:bg-purple-600' },
+    orange: { border: 'border-orange-500', text: 'text-orange-400', hoverBg: 'hover:bg-orange-600' },
+    fuchsia: { border: 'border-fuchsia-500', text: 'text-fuchsia-400', hoverBg: 'hover:bg-fuchsia-600' },
+  };
   const text = isEnglish ? {
     title: 'Case',
     accent: 'Lab',
@@ -132,29 +143,32 @@ const Showcase: React.FC = () => {
 
        {/* Horizontal Container */}
        <div ref={wrapperRef} className="flex flex-nowrap h-full" style={{ width: `${slides.length * 100}%` }}>
-          {slides.map((slide, index) => (
+          {slides.map((slide, index) => {
+             const sc = slidesColorMap[slide.color] ?? slidesColorMap.blue;
+             return (
              <div key={slide.id} className="showcase-slide w-screen h-full relative flex-shrink-0 border-r border-white/5 overflow-hidden group">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center showcase-img scale-110" 
+                <div
+                  className="absolute inset-0 bg-cover bg-center showcase-img scale-110"
                   style={{ backgroundImage: `url('${slide.img}')` }}
                 ></div>
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-700"></div>
-                
+
                 {/* Content Card */}
-                <div className={`absolute bottom-20 left-6 md:left-20 max-w-xl bg-slate-900/60 backdrop-blur-md p-8 rounded-2xl border-l-4 border-${slide.color}-500 transform translate-y-10 opacity-0 transition-all duration-700 group-hover:translate-y-0 group-hover:opacity-100 hoverable`}>
+                <div className={`absolute bottom-20 left-6 md:left-20 max-w-xl bg-slate-900/60 backdrop-blur-md p-8 rounded-2xl border-l-4 ${sc.border} transform translate-y-10 opacity-0 transition-all duration-700 group-hover:translate-y-0 group-hover:opacity-100 hoverable`}>
                    <div className="text-6xl font-bold text-white/10 absolute -top-10 -right-4 select-none">{`0${index + 1}`}</div>
-                   <div className={`text-${slide.color}-400 text-sm font-bold tracking-widest mb-2`}>{slide.sub}</div>
+                   <div className={`${sc.text} text-sm font-bold tracking-widest mb-2`}>{slide.sub}</div>
                    <h3 className="text-3xl font-bold text-white mb-4">{isEnglish ? slide.title.en : slide.title.zh}</h3>
                    <p className="text-gray-200 mb-6 leading-relaxed">{isEnglish ? slide.desc.en : slide.desc.zh}</p>
                    <Link
                      to={route(`/cases?focus=${[1,5,0,3,6,4][index]}`)}
-                     className={`px-6 py-2 bg-white/10 hover:bg-${slide.color}-600 text-white rounded border border-white/20 transition-all hoverable`}
+                     className={`px-6 py-2 bg-white/10 ${sc.hoverBg} text-white rounded border border-white/20 transition-all hoverable`}
                    >
                       {text.cta}
                    </Link>
                 </div>
              </div>
-          ))}
+             );
+          })}
        </div>
     </section>
   );

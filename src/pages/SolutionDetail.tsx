@@ -24,6 +24,7 @@ const SolutionDetail: React.FC = () => {
     ctaTitle: 'Want to discuss this solution further?',
     ctaDesc: 'We can quickly map a practical pilot path around your current business process.',
     cta: 'Contact Us',
+    tryNow: 'Try Now',
   } : {
     home: '首页',
     solutions: '解决方案',
@@ -35,6 +36,7 @@ const SolutionDetail: React.FC = () => {
     ctaTitle: '需要进一步沟通该方案？',
     ctaDesc: '我们可以基于现有业务流程，快速梳理可落地的试点路径。',
     cta: '立即咨询',
+    tryNow: '立即体验',
   };
 
   useLayoutEffect(() => {
@@ -183,10 +185,30 @@ const SolutionDetail: React.FC = () => {
             <div className="text-white text-xl font-bold mb-2">{text.ctaTitle}</div>
             <p className="text-slate-400 text-sm">{text.ctaDesc}</p>
           </div>
-          <Link to={route('/contact')} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-700 transition-colors">
-            {text.cta}
-            <i className="fas fa-arrow-right text-xs"></i>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+            {solution.link && (
+              <a
+                href={solution.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center justify-center gap-2 rounded-lg ${color.bg} px-5 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity`}
+              >
+                {text.tryNow}
+                <i className="fas fa-external-link-alt text-xs"></i>
+              </a>
+            )}
+            <Link
+              to={route('/contact')}
+              className={`inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-bold text-white transition-colors ${
+                solution.link
+                  ? 'border border-white/15 bg-white/5 hover:bg-white/10'
+                  : 'bg-blue-600 hover:bg-blue-700'
+              }`}
+            >
+              {text.cta}
+              <i className="fas fa-arrow-right text-xs"></i>
+            </Link>
+          </div>
         </section>
       </div>
 
