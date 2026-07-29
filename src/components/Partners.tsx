@@ -1,29 +1,41 @@
-
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 import TiltCard from './TiltCard';
 import { useLanguage } from '@/lib/i18n';
+import { translate } from '@/lib/translations';
+
+const string = (language: 'zh' | 'en', path: string) => translate(language, path) as string;
+
+type PartnerLogo = { name: string; src: string };
+
+const partnerKeys = [
+  { id: 'bytedance', src: '/images/partners/bytedance.png' },
+  { id: 'aws', src: '/images/partners/aws.png' },
+  { id: 'azure', src: '/images/partners/azure.png' },
+  { id: 'huawei', src: '/images/partners/huawei.png' },
+  { id: 'baidu', src: '/images/partners/4.png' },
+  { id: 'tsinghua', src: '/images/partners/5.png' },
+  { id: 'telecom', src: '/images/partners/9.png' },
+  { id: 'sjtu', src: '/images/partners/6.png' },
+  { id: 'cas', src: '/images/partners/7.png' },
+  { id: 'cscec', src: '/images/partners/12.png' },
+  { id: 'aliyun', src: '/images/partners/11.png' },
+  { id: 'tencent', src: '/images/partners/tencent.png' },
+  { id: 'iflytek', src: '/images/partners/2.png' },
+  { id: 'hust', src: '/images/partners/14.png' },
+] as const;
 
 const Partners: React.FC = () => {
-  const { isEnglish } = useLanguage();
-  const logosRow1 = [
-    { name: isEnglish ? 'ByteDance' : '字节跳动', src: '/images/partners/bytedance.png' },
-    { name: 'AWS', src: '/images/partners/aws.png' },
-    { name: 'Azure', src: '/images/partners/azure.png' },
-    { name: isEnglish ? 'Huawei Cloud' : '华为云', src: '/images/partners/huawei.png' },
-    { name: isEnglish ? 'Baidu Cloud' : '百度云', src: '/images/partners/4.png' },
-    { name: isEnglish ? 'Tsinghua University' : '清华大学', src: '/images/partners/5.png' },
-    { name: isEnglish ? 'China Telecom' : '中国电信', src: '/images/partners/9.png' },
-  ];
+  const { language } = useLanguage();
+  const t = (path: string) => string(language, path);
 
-  const logosRow2 = [
-    { name: isEnglish ? 'Shanghai Jiao Tong University' : '上海交通大学', src: '/images/partners/6.png' },
-    { name: isEnglish ? 'Chinese Academy of Sciences' : '中国科学院', src: '/images/partners/7.png' },
-    { name: isEnglish ? 'China State Construction' : '中国建筑', src: '/images/partners/12.png' },
-    { name: isEnglish ? 'Alibaba Cloud' : '阿里云', src: '/images/partners/11.png' },
-    { name: isEnglish ? 'Tencent Cloud' : '腾讯云', src: '/images/partners/tencent.png' },
-    { name: isEnglish ? 'iFlytek' : '科大讯飞', src: '/images/partners/2.png' },
-    { name: isEnglish ? 'Huazhong University of Science and Technology' : '华中科技大学', src: '/images/partners/14.png' },
-  ];
+  const logosRow1: PartnerLogo[] = useMemo(
+    () => partnerKeys.slice(0, 7).map(({ id, src }) => ({ name: t(`partners.logos.${id}`), src })),
+    [t],
+  );
+  const logosRow2: PartnerLogo[] = useMemo(
+    () => partnerKeys.slice(7).map(({ id, src }) => ({ name: t(`partners.logos.${id}`), src })),
+    [t],
+  );
 
   const rowRef1 = useRef<HTMLDivElement>(null);
   const rowRef2 = useRef<HTMLDivElement>(null);
@@ -40,13 +52,13 @@ const Partners: React.FC = () => {
         }
       `}</style>
        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-slate-950 to-slate-950 -z-10"></div>
-       
+
        <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-             <h2 className="text-3xl md:text-4xl font-bold mb-4">{isEnglish ? 'Partners and Cases' : '合作案例'}</h2>
+             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('partners.title')}</h2>
              <div className="flex items-center justify-center gap-4 text-gray-400 text-sm md:text-lg">
                 <span className="h-px w-8 bg-blue-500/50"></span>
-                <span>{isEnglish ? 'Building smarter ecosystems and future-ready opportunities together' : '共筑智慧新生态 共迎未来新机遇'}</span>
+                <span>{t('partners.subtitle')}</span>
                 <span className="h-px w-8 bg-blue-500/50"></span>
              </div>
           </div>

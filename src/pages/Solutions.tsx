@@ -1,4 +1,3 @@
-
 import React, { useLayoutEffect, useRef, useMemo, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
@@ -7,32 +6,19 @@ import TiltCard from '@/components/TiltCard';
 import { getSolutionsData, solutionColorClasses } from '@/data/solutions';
 import { buildBreadcrumbSchema, buildItemListSchema } from '@/lib/seo';
 import { useLanguage } from '@/lib/i18n';
+import { translate } from '@/lib/translations';
 import gsap from 'gsap';
+
+const string = (language: 'zh' | 'en', path: string) => translate(language, path) as string;
 
 const Solutions: React.FC = () => {
     const containerRef = useRef(null);
-    const { isEnglish, language, route } = useLanguage();
-    const allLabel = isEnglish ? 'All' : '全部';
+    const { language, route } = useLanguage();
+    const t = (path: string) => string(language, path);
+    const allLabel = t('solutions.all');
     const [activeFilter, setActiveFilter] = useState<string>(allLabel);
     const location = useLocation();
     const solutionsData = useMemo(() => getSolutionsData(language), [language]);
-    const text = isEnglish ? {
-        title: 'Full-Stack Solutions',
-        subtitle: 'Solutions Matrix',
-        description: 'Ximeng Tech provides enterprise AI solutions across industrial AI agents, education technology, AI cultural tourism, cloud engine services, omnichannel AI marketing, and custom AI hardware.',
-        home: 'Home',
-        solutions: 'Solutions',
-        listName: 'Ximeng Tech Solutions',
-        more: 'Learn More',
-    } : {
-        title: '全栈解决方案',
-        subtitle: 'Solutions Matrix',
-        description: '羲梦科技提供工业制造智能体、科技教育平台、AI 文旅文化、云引擎服务、全域 AI 营销与 AI 硬件定制等企业级 AI 解决方案。',
-        home: '首页',
-        solutions: '解决方案',
-        listName: '羲梦科技解决方案',
-        more: '了解更多',
-    };
 
     const filters = useMemo(() => {
         const set = new Set<string>([allLabel]);
@@ -78,26 +64,26 @@ const Solutions: React.FC = () => {
     return (
         <div ref={containerRef} className="min-h-screen bg-slate-950">
             <Seo
-                title={text.title}
-                description={text.description}
+                title={t('solutions.title')}
+                description={t('solutions.description')}
                 path="/solutions"
                 image="/images/solution-industrial.jpg"
                 keywords={solutionsData.flatMap((item) => [item.title, item.subtitle])}
                 structuredData={[
                     buildBreadcrumbSchema([
-                        { name: text.home, path: route('/') },
-                        { name: text.solutions, path: route('/solutions') },
+                        { name: t('solutions.home'), path: route('/') },
+                        { name: t('solutions.solutions'), path: route('/solutions') },
                     ]),
                     buildItemListSchema(
                         solutionsData.map((item) => ({
                             name: item.title,
                             path: route(`/solutions/${item.id}`),
                         })),
-                        text.listName,
+                        t('solutions.listName'),
                     ),
                 ]}
             />
-            <PageHeader title={text.title} subtitle={text.subtitle} />
+            <PageHeader title={t('solutions.title')} subtitle={t('solutions.subtitle')} />
             <div className="container mx-auto px-6 py-12">
                 <div className="flex flex-wrap gap-3 mb-10">
                     {filters.map(f => (
@@ -152,7 +138,7 @@ const Solutions: React.FC = () => {
 
                                 <div>
                                     <Link to={route(`/solutions/${item.id}`)} className="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-600 transition-colors">
-                                        {text.more}
+                                        {t('solutions.more')}
                                         <i className="fas fa-arrow-right text-xs"></i>
                                     </Link>
                                 </div>

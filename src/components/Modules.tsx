@@ -1,33 +1,27 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TiltCard from './TiltCard';
 import { getSolutionsData, solutionColorClasses } from '@/data/solutions';
 import { useLanguage } from '@/lib/i18n';
+import { translate } from '@/lib/translations';
+
+const string = (language: 'zh' | 'en', path: string) => translate(language, path) as string;
 
 const Modules: React.FC = () => {
-  const { isEnglish, language, route } = useLanguage();
+  const { language, route } = useLanguage();
   const modules = getSolutionsData(language);
-  const text = isEnglish ? {
-    title: 'Full-Stack Solutions',
-    desc: 'Six core engines powering all-scenario digital transformation. We deliver not only technology, but the operational capability to grow into the future.',
-    more: 'Learn More',
-  } : {
-    title: '全栈解决方案',
-    desc: '六大核心引擎，驱动企业全场景数字化转型。我们不仅提供技术，更提供面向未来的生存能力。',
-    more: '了解更多',
-  };
+  const t = (path: string) => string(language, path);
 
   return (
     <section id="modules" className="py-24 md:py-32 relative bg-slate-950/50">
       <div className="container mx-auto px-6">
         <div className="mb-16 md:mb-20 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">{text.title}</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">{t('modules.title')}</h2>
           <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">
-            {text.desc}
+            {t('modules.desc')}
           </p>
         </div>
-        
+
         {/* Adjusted Grid: grid-cols-1 on mobile (important fix), grid-cols-2 on tablet, grid-cols-3 on desktop */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {modules.slice(0, 6).map((mod) => {
@@ -61,7 +55,7 @@ const Modules: React.FC = () => {
                       to={route(`/solutions/${mod.id}`)}
                       className="flex items-center text-white font-bold text-sm tracking-wide mt-2 hoverable"
                     >
-                      {text.more} <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                      {t('common.learnMore')} <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </Link>
                   </div>
                 </div>

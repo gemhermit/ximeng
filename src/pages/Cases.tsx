@@ -1,4 +1,3 @@
-
 import React, { useLayoutEffect, useRef, useMemo, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
@@ -6,37 +5,22 @@ import Seo from '@/components/Seo';
 import { getCaseCategories, getCasesData, getCategoryImage, CaseItem } from '@/data/cases';
 import { buildBreadcrumbSchema, buildItemListSchema } from '@/lib/seo';
 import { useLanguage } from '@/lib/i18n';
+import { translate } from '@/lib/translations';
 import gsap from 'gsap';
+
+const string = (language: 'zh' | 'en', path: string) => translate(language, path) as string;
+const strings = (language: 'zh' | 'en', path: string) => translate(language, path) as string[];
 
 const Cases: React.FC = () => {
     const containerRef = useRef(null);
-    const { isEnglish, language, route } = useLanguage();
-    const allLabel = isEnglish ? 'All' : '全部';
+    const { language, route } = useLanguage();
+    const t = (path: string) => string(language, path);
+    const extraKeywords = strings(language, 'cases.keyword');
+    const allLabel = t('cases.all');
     const [activeCat, setActiveCat] = useState<string>(allLabel);
     const location = useLocation();
     const casesFlat: CaseItem[] = useMemo(() => getCasesData(language), [language]);
     const caseCategories = useMemo(() => getCaseCategories(language), [language]);
-    const text = isEnglish ? {
-        title: 'Innovation Cases',
-        seoTitle: 'Innovation Cases',
-        subtitle: 'Professional Case Library',
-        description: 'Explore Ximeng Tech AI solution cases across industrial manufacturing, education platforms, AI cultural tourism, cloud engine services, omnichannel AI marketing, and custom AI hardware.',
-        home: 'Home',
-        cases: 'Innovation Cases',
-        listName: 'Ximeng Tech Innovation Cases',
-        detail: 'View Details',
-        external: 'External Link',
-    } : {
-        title: '案例展示平台',
-        seoTitle: '创新案例',
-        subtitle: '专业案例库',
-        description: '查看羲梦科技在工业制造、教育平台、AI 文旅、云引擎服务、全域 AI 营销和 AI 硬件定制方向的 AI 解决方案案例。',
-        home: '首页',
-        cases: '创新案例',
-        listName: '羲梦科技创新案例',
-        detail: '查看详情',
-        external: '外部链接',
-    };
 
     const cats = useMemo(() => {
         const set = new Set<string>([allLabel]);
@@ -65,7 +49,7 @@ const Cases: React.FC = () => {
             });
         }, containerRef);
         return () => ctx.revert();
-    }, [activeCat]); // Added activeCat dependency to re-animate on filter change
+    }, [activeCat]);
 
     useEffect(() => {
         if (location.hash) {
@@ -106,7 +90,7 @@ const Cases: React.FC = () => {
 
                         <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
                             <span className="inline-flex items-center gap-2 text-sm text-white font-medium group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-300">
-                                {text.detail}
+                                {t('cases.detail')}
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
@@ -120,7 +104,7 @@ const Cases: React.FC = () => {
                                     onClick={e => e.stopPropagation()}
                                     className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
                                 >
-                                    {text.external} ↗
+                                    {t('cases.external')} ↗
                                 </a>
                             )}
                         </div>
@@ -133,26 +117,26 @@ const Cases: React.FC = () => {
     return (
         <div ref={containerRef} className="min-h-screen bg-slate-950">
             <Seo
-                title={text.seoTitle}
-                description={text.description}
+                title={t('cases.seoTitle')}
+                description={t('cases.description')}
                 path="/cases"
                 image="/images/case-data.jpg"
-                keywords={isEnglish ? [...caseCategories, 'AI cases', 'agent cases', 'enterprise digital transformation cases'] : [...caseCategories, 'AI 案例', '智能体案例', '企业数字化案例']}
+                keywords={[...caseCategories, ...extraKeywords]}
                 structuredData={[
                     buildBreadcrumbSchema([
-                        { name: text.home, path: route('/') },
-                        { name: text.cases, path: route('/cases') },
+                        { name: t('cases.home'), path: route('/') },
+                        { name: t('cases.cases'), path: route('/cases') },
                     ]),
                     buildItemListSchema(
                         casesFlat.map((item) => ({
                             name: item.title,
                             path: route(`/cases/${item.slug}`),
                         })),
-                        text.listName,
+                        t('cases.listName'),
                     ),
                 ]}
             />
-            <PageHeader title={text.title} subtitle={text.subtitle} gradient="from-purple-400 via-pink-400 to-red-400" />
+            <PageHeader title={t('cases.title')} subtitle={t('cases.subtitle')} gradient="from-purple-400 via-pink-400 to-red-400" />
             <div className="container mx-auto px-4 sm:px-6 py-12">
                 {/* Filter Buttons */}
                 <div className="flex flex-wrap gap-3 mb-10 justify-center md:justify-start">
@@ -172,7 +156,7 @@ const Cases: React.FC = () => {
                     {caseCategories.map((cat, ci) => {
                       const list = casesFlat.filter(c => c.category === cat);
                       if (list.length === 0) return null;
-                      
+
                       return (
                         <div key={ci}>
                           <div className="flex items-center gap-4 mb-6 md:mb-8">
@@ -182,7 +166,7 @@ const Cases: React.FC = () => {
                             </div>
                             <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
                           </div>
-                          
+
                           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-8">
                               {list.map((item, idx) => (
                                 <CaseCard key={`${item.slug}-${idx}`} item={item} />

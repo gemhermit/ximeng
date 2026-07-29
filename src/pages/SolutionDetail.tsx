@@ -5,39 +5,18 @@ import Seo from '@/components/Seo';
 import { getSolutionById, solutionColorClasses } from '@/data/solutions';
 import { absoluteUrl, buildBreadcrumbSchema, getSiteMeta } from '@/lib/seo';
 import { useLanguage } from '@/lib/i18n';
+import { translate } from '@/lib/translations';
 import gsap from 'gsap';
+
+const string = (language: 'zh' | 'en', path: string) => translate(language, path) as string;
 
 const SolutionDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const containerRef = useRef(null);
-  const { isEnglish, language, route } = useLanguage();
+  const { language, route } = useLanguage();
   const site = getSiteMeta(language);
   const solution = getSolutionById(id, language);
-  const text = isEnglish ? {
-    home: 'Home',
-    solutions: 'Solutions',
-    back: 'Back to Solutions',
-    overview: 'Solution Overview',
-    capabilities: 'Core Capabilities',
-    scenarios: 'Use Cases',
-    outcomes: 'Business Value',
-    ctaTitle: 'Want to discuss this solution further?',
-    ctaDesc: 'We can quickly map a practical pilot path around your current business process.',
-    cta: 'Contact Us',
-    tryNow: 'Try Now',
-  } : {
-    home: '首页',
-    solutions: '解决方案',
-    back: '返回核心业务',
-    overview: '方案概览',
-    capabilities: '核心能力',
-    scenarios: '应用场景',
-    outcomes: '业务价值',
-    ctaTitle: '需要进一步沟通该方案？',
-    ctaDesc: '我们可以基于现有业务流程，快速梳理可落地的试点路径。',
-    cta: '立即咨询',
-    tryNow: '立即体验',
-  };
+  const t = (path: string) => string(language, path);
 
   useLayoutEffect(() => {
     if (!solution) return;
@@ -72,8 +51,8 @@ const SolutionDetail: React.FC = () => {
         keywords={[solution.title, solution.subtitle, ...solution.features, ...solution.scenarios]}
         structuredData={[
           buildBreadcrumbSchema([
-            { name: text.home, path: route('/') },
-            { name: text.solutions, path: route('/solutions') },
+            { name: t('solutionDetail.home'), path: route('/') },
+            { name: t('solutionDetail.solutions'), path: route('/solutions') },
             { name: solution.title, path: route(`/solutions/${solution.id}`) },
           ]),
           {
@@ -97,7 +76,7 @@ const SolutionDetail: React.FC = () => {
       <div className="container mx-auto px-6 py-12 md:py-16">
         <Link to={route(`/solutions#${solution.id}`)} className="solution-detail-anim inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors">
           <i className="fas fa-arrow-left"></i>
-          {text.back}
+          {t('solutionDetail.back')}
         </Link>
 
         <section className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
@@ -119,7 +98,7 @@ const SolutionDetail: React.FC = () => {
 
           <div className="lg:col-span-2 solution-detail-anim">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
-              <div className={`${color.text} text-xs font-bold tracking-widest mb-3`}>{text.overview}</div>
+              <div className={`${color.text} text-xs font-bold tracking-widest mb-3`}>{t('solutionDetail.overview')}</div>
               <p className="text-slate-300 leading-relaxed">{solution.overview}</p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -137,7 +116,7 @@ const SolutionDetail: React.FC = () => {
           <div className="solution-detail-anim rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-3">
               <span className={`block h-7 w-1 rounded-full ${color.bg}`}></span>
-              {text.capabilities}
+              {t('solutionDetail.capabilities')}
             </h2>
             <div className="space-y-3">
               {solution.features.map((feature) => (
@@ -152,7 +131,7 @@ const SolutionDetail: React.FC = () => {
           <div className="solution-detail-anim rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-3">
               <span className={`block h-7 w-1 rounded-full ${color.bg}`}></span>
-              {text.scenarios}
+              {t('solutionDetail.scenarios')}
             </h2>
             <ul className="space-y-3">
               {solution.scenarios.map((item) => (
@@ -167,7 +146,7 @@ const SolutionDetail: React.FC = () => {
           <div className="solution-detail-anim rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-3">
               <span className={`block h-7 w-1 rounded-full ${color.bg}`}></span>
-              {text.outcomes}
+              {t('solutionDetail.outcomes')}
             </h2>
             <ul className="space-y-3">
               {solution.outcomes.map((item) => (
@@ -182,8 +161,8 @@ const SolutionDetail: React.FC = () => {
 
         <section className="solution-detail-anim mt-12 rounded-2xl border border-white/10 bg-slate-900/70 p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
           <div>
-            <div className="text-white text-xl font-bold mb-2">{text.ctaTitle}</div>
-            <p className="text-slate-400 text-sm">{text.ctaDesc}</p>
+            <div className="text-white text-xl font-bold mb-2">{t('solutionDetail.ctaTitle')}</div>
+            <p className="text-slate-400 text-sm">{t('solutionDetail.ctaDesc')}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 shrink-0">
             {solution.link && (
@@ -193,7 +172,7 @@ const SolutionDetail: React.FC = () => {
                 rel="noopener noreferrer"
                 className={`inline-flex items-center justify-center gap-2 rounded-lg ${color.bg} px-5 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity`}
               >
-                {text.tryNow}
+                {t('solutionDetail.tryNow')}
                 <i className="fas fa-external-link-alt text-xs"></i>
               </a>
             )}
@@ -205,7 +184,7 @@ const SolutionDetail: React.FC = () => {
                   : 'bg-blue-600 hover:bg-blue-700'
               }`}
             >
-              {text.cta}
+              {t('solutionDetail.cta')}
               <i className="fas fa-arrow-right text-xs"></i>
             </Link>
           </div>

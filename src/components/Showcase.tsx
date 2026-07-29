@@ -3,8 +3,22 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLanguage } from '@/lib/i18n';
+import { translate } from '@/lib/translations';
 
-const slides = [
+const string = (language: 'zh' | 'en', path: string) => translate(language, path) as string;
+
+type LocalizedText = { zh: string; en: string };
+
+type Slide = {
+  id: number;
+  title: LocalizedText;
+  sub: string;
+  desc: LocalizedText;
+  img: string;
+  color: string;
+};
+
+const slidesData: Slide[] = [
   {
     id: 1,
     title: { zh: '工业制造', en: 'Industrial Manufacturing' },
@@ -58,9 +72,8 @@ const slides = [
 const Showcase: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const { isEnglish, route } = useLanguage();
-  // Static class map — Tailwind JIT cannot detect `border-${color}-500` style
-  // dynamic class names, so we list the full strings here.
+  const { language, route } = useLanguage();
+  const t = (path: string) => string(language, path);
   const slidesColorMap: Record<string, { border: string; text: string; hoverBg: string }> = {
     blue: { border: 'border-blue-500', text: 'text-blue-400', hoverBg: 'hover:bg-blue-600' },
     green: { border: 'border-green-500', text: 'text-green-400', hoverBg: 'hover:bg-green-600' },
@@ -70,22 +83,11 @@ const Showcase: React.FC = () => {
     orange: { border: 'border-orange-500', text: 'text-orange-400', hoverBg: 'hover:bg-orange-600' },
     fuchsia: { border: 'border-fuchsia-500', text: 'text-fuchsia-400', hoverBg: 'hover:bg-fuchsia-600' },
   };
-  const text = isEnglish ? {
-    title: 'Case',
-    accent: 'Lab',
-    hint: 'Scroll down to explore future-ready deployments',
-    cta: 'View Details',
-  } : {
-    title: '创新案例',
-    accent: '实验室',
-    hint: '向下滑动，探索未来形态',
-    cta: '查看详情',
-  };
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
       const slides = gsap.utils.toArray(".showcase-slide");
-      
+
       const scrollTween = gsap.to(slides, {
         xPercent: -100 * (slides.length - 1),
         ease: "none",
@@ -94,14 +96,13 @@ const Showcase: React.FC = () => {
           pin: true,
           scrub: 1,
           snap: 1 / (slides.length - 1),
-          end: "+=3500", // Adjust scrolling length
+          end: "+=3500",
           onUpdate: (self: any) => {
              gsap.to("#showcase-progress", { width: Math.round(self.progress * 100) + "%", duration: 0.1, ease: "none" });
           }
         }
       });
 
-      // Parallax for images
       slides.forEach((slide: any) => {
         const img = slide.querySelector(".showcase-img");
         if (img) {
@@ -125,25 +126,21 @@ const Showcase: React.FC = () => {
 
   return (
     <section id="showcase" ref={containerRef} className="relative bg-slate-950 overflow-hidden h-screen z-20">
-       {/* Gradient Mask */}
        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-950/90 to-transparent z-10 pointer-events-none"></div>
 
-       {/* Static Title - Moved Down to top-32 to clear Navbar */}
        <div className="absolute top-32 left-6 md:left-20 z-10 pointer-events-none">
           <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter">
-             {text.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{text.accent}</span>
+             {t('showcase.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{t('showcase.accent')}</span>
           </h2>
-          <p className="text-gray-400 mt-2 text-lg">{text.hint} <i className="fas fa-arrow-down ml-2 animate-bounce"></i></p>
+          <p className="text-gray-400 mt-2 text-lg">{t('showcase.hint')} <i className="fas fa-arrow-down ml-2 animate-bounce"></i></p>
        </div>
 
-       {/* Progress Bar */}
        <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10 z-20">
           <div id="showcase-progress" className="h-full bg-blue-500 w-0"></div>
        </div>
 
-       {/* Horizontal Container */}
-       <div ref={wrapperRef} className="flex flex-nowrap h-full" style={{ width: `${slides.length * 100}%` }}>
-          {slides.map((slide, index) => {
+       <div ref={wrapperRef} className="flex flex-nowrap h-full" style={{ width: `${slidesData.length * 100}%` }}>
+          {slidesData.map((slide, index) => {
              const sc = slidesColorMap[slide.color] ?? slidesColorMap.blue;
              return (
              <div key={slide.id} className="showcase-slide w-screen h-full relative flex-shrink-0 border-r border-white/5 overflow-hidden group">
@@ -153,17 +150,16 @@ const Showcase: React.FC = () => {
                 ></div>
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-700"></div>
 
-                {/* Content Card */}
                 <div className={`absolute bottom-20 left-6 md:left-20 max-w-xl bg-slate-900/60 backdrop-blur-md p-8 rounded-2xl border-l-4 ${sc.border} transform translate-y-10 opacity-0 transition-all duration-700 group-hover:translate-y-0 group-hover:opacity-100 hoverable`}>
                    <div className="text-6xl font-bold text-white/10 absolute -top-10 -right-4 select-none">{`0${index + 1}`}</div>
                    <div className={`${sc.text} text-sm font-bold tracking-widest mb-2`}>{slide.sub}</div>
-                   <h3 className="text-3xl font-bold text-white mb-4">{isEnglish ? slide.title.en : slide.title.zh}</h3>
-                   <p className="text-gray-200 mb-6 leading-relaxed">{isEnglish ? slide.desc.en : slide.desc.zh}</p>
+                   <h3 className="text-3xl font-bold text-white mb-4">{slide.title[language]}</h3>
+                   <p className="text-gray-200 mb-6 leading-relaxed">{slide.desc[language]}</p>
                    <Link
                      to={route(`/cases?focus=${[1,5,0,3,6,4][index]}`)}
                      className={`px-6 py-2 bg-white/10 ${sc.hoverBg} text-white rounded border border-white/20 transition-all hoverable`}
                    >
-                      {text.cta}
+                      {t('showcase.cta')}
                    </Link>
                 </div>
              </div>

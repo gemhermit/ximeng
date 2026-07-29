@@ -5,45 +5,26 @@ import Seo from '@/components/Seo';
 import { getCaseBySlug, getCategoryImage } from '@/data/cases';
 import { absoluteUrl, buildBreadcrumbSchema, getSiteMeta } from '@/lib/seo';
 import { useLanguage } from '@/lib/i18n';
+import { translate } from '@/lib/translations';
+
+const string = (language: 'zh' | 'en', path: string) => translate(language, path) as string;
 
 const CaseDetail: React.FC = () => {
   const { slug } = useParams();
-  const { isEnglish, language, route } = useLanguage();
+  const { language, route } = useLanguage();
   const site = getSiteMeta(language);
   const item = getCaseBySlug(slug, language);
-  const text = isEnglish ? {
-    notFound: 'Case Not Found',
-    notFoundMessage: 'The case you are looking for does not exist. Please return to the case library.',
-    backList: 'Back to Case Library',
-    contact: 'Contact Us',
-    home: 'Home',
-    cases: 'Innovation Cases',
-    details: 'Project Details',
-    scope: 'Implementation Scope',
-    achievements: 'Results',
-    external: 'External Link',
-  } : {
-    notFound: '案例未找到',
-    notFoundMessage: '未找到对应案例，请返回列表。',
-    backList: '返回案例列表',
-    contact: '联系我们',
-    home: '首页',
-    cases: '创新案例',
-    details: '项目详情',
-    scope: '实施范围',
-    achievements: '成果数据',
-    external: '外部链接',
-  };
+  const t = (path: string) => string(language, path);
 
   if (!item) {
     return (
       <div className="min-h-screen bg-slate-950">
-        <Seo title={text.notFound} path="/cases" noindex />
-        <PageHeader title={text.notFound} subtitle="Not Found" gradient="from-purple-400 via-pink-400 to-red-400" />
+        <Seo title={t('caseDetail.notFound')} path="/cases" noindex />
+        <PageHeader title={t('caseDetail.notFound')} subtitle="Not Found" gradient="from-purple-400 via-pink-400 to-red-400" />
         <div className="container mx-auto px-6 py-12">
           <div className="p-6 rounded-xl border border-white/10 bg-white/5">
-            <p className="text-gray-300">{text.notFoundMessage}</p>
-            <Link to={route('/cases')} className="mt-4 inline-block px-4 py-2 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-600">{text.backList}</Link>
+            <p className="text-gray-300">{t('caseDetail.notFoundMessage')}</p>
+            <Link to={route('/cases')} className="mt-4 inline-block px-4 py-2 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-600">{t('caseDetail.backList')}</Link>
           </div>
         </div>
       </div>
@@ -61,8 +42,8 @@ const CaseDetail: React.FC = () => {
         keywords={[item.title, item.category, ...(item.scope ?? []), ...(item.achievements ?? [])]}
         structuredData={[
           buildBreadcrumbSchema([
-            { name: text.home, path: route('/') },
-            { name: text.cases, path: route('/cases') },
+            { name: t('caseDetail.home'), path: route('/') },
+            { name: t('caseDetail.cases'), path: route('/cases') },
             { name: item.title, path: route(`/cases/${item.slug}`) },
           ]),
           {
@@ -112,7 +93,7 @@ const CaseDetail: React.FC = () => {
               <div className="p-8 rounded-2xl border border-white/10 bg-white/5">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
-                  <h2 className="text-xl font-bold text-white">{text.details}</h2>
+                  <h2 className="text-xl font-bold text-white">{t('caseDetail.details')}</h2>
                 </div>
                 <p className="text-slate-300 text-base md:text-lg leading-relaxed">{item.story}</p>
               </div>
@@ -121,7 +102,7 @@ const CaseDetail: React.FC = () => {
               <div className="p-8 rounded-2xl border border-white/10 bg-white/5">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="w-1 h-6 bg-purple-500 rounded-full"></span>
-                  <h2 className="text-xl font-bold text-white">{text.scope}</h2>
+                  <h2 className="text-xl font-bold text-white">{t('caseDetail.scope')}</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {item.scope.map((s, i) => (
@@ -140,7 +121,7 @@ const CaseDetail: React.FC = () => {
               <div className="p-8 rounded-2xl border border-white/10 bg-white/5">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="w-1 h-6 bg-emerald-500 rounded-full"></span>
-                  <h2 className="text-xl font-bold text-white">{text.achievements}</h2>
+                  <h2 className="text-xl font-bold text-white">{t('caseDetail.achievements')}</h2>
                 </div>
                 <div className="space-y-3">
                   {item.achievements.map((a, i) => (
@@ -153,10 +134,10 @@ const CaseDetail: React.FC = () => {
             )}
             <div className="space-y-3">
               {item.link && (
-                <a href={item.link} target="_blank" rel="noreferrer" className="block w-full text-center px-6 py-3 rounded-xl bg-white/10 text-slate-200 text-base border border-white/20 hover:bg-white/20 transition-colors">{text.external}</a>
+                <a href={item.link} target="_blank" rel="noreferrer" className="block w-full text-center px-6 py-3 rounded-xl bg-white/10 text-slate-200 text-base border border-white/20 hover:bg-white/20 transition-colors">{t('caseDetail.external')}</a>
               )}
-              <Link to={route('/contact')} className="block w-full text-center px-6 py-3 rounded-xl bg-blue-600 text-white text-base hover:bg-blue-500 transition-colors">{text.contact}</Link>
-              <Link to={route('/cases')} className="block w-full text-center px-6 py-3 rounded-xl bg-white/10 text-slate-200 text-base border border-white/20 hover:bg-white/20 transition-colors">{text.backList}</Link>
+              <Link to={route('/contact')} className="block w-full text-center px-6 py-3 rounded-xl bg-blue-600 text-white text-base hover:bg-blue-500 transition-colors">{t('caseDetail.contact')}</Link>
+              <Link to={route('/cases')} className="block w-full text-center px-6 py-3 rounded-xl bg-white/10 text-slate-200 text-base border border-white/20 hover:bg-white/20 transition-colors">{t('caseDetail.backList')}</Link>
             </div>
           </div>
         </div>
